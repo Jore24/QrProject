@@ -1,0 +1,125 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+
+        <EditText
+            android:id="@+id/etAdminName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre" />
+
+        <EditText
+            android:id="@+id/etAdminEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo electrónico" />
+
+        <EditText
+            android:id="@+id/etAdminPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Contraseña" />
+        <EditText
+            android:id="@+id/etAdminSexo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sexo" />
+
+        <EditText
+            android:id="@+id/etAdminTelefono"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Teléfono" />
+
+        <EditText
+            android:id="@+id/etAdminNumeroCuenta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número de cuenta" />
+
+        <EditText
+            android:id="@+id/etAdminBanco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Banco" />
+
+        <EditText
+            android:id="@+id/etAdminDni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="DNI" />
+
+        <EditText
+            android:id="@+id/etAdminFechaNacimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de nacimiento" />
+
+        <EditText
+            android:id="@+id/etAdminJefe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jefe" />
+
+        <EditText
+            android:id="@+id/etAdminDireccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dirección" />
+
+        <EditText
+            android:id="@+id/etAdminDistrito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Distrito" />
+
+        <EditText
+            android:id="@+id/etAdminCondicion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Condición" />
+
+        <EditText
+            android:id="@+id/etAdminCargoId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cargo"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/etAdminRol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Rol" />
+        <EditText
+            android:id="@+id/etAdminEstadoCuenta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Estado del usuario" />
+        <EditText
+            android:id="@+id/etAdminImagenPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Url Imagen de Perfil" />
+
+        <Button
+            android:id="@+id/btnRegisterAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar" />
+
+    </LinearLayout>
+
+
+
+</ScrollView>

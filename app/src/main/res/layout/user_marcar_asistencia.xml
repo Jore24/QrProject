@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".activitys.user.MarcarAsistenciaActivity">
+
+    <Button
+        android:id="@+id/btnMarcarAsistencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marcar Asistencia"
+        android:layout_marginBottom="16dp"
+        />
+
+    <Button
+        android:id="@+id/btnFinalizarJornada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finalizar Jornada"
+        />
+    <TextView
+        android:id="@+id/tvMensaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="16dp"
+        />
+
+
+</LinearLayout>

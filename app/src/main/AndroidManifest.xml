@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Intento"
+        tools:targetApi="31">
+        <activity
+            android:name=".activitys.admin.ListarUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.admin.EliminarUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.admin.ActualizarUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.admin.RegistrarUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.admin.HomeAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".registrar_usuario"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.auth.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Intento"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activitys.auth.HomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activitys.user.PerfilActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activitys.user.MarcarAsistenciaActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activitys.user.HorarioActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activitys.user.RegistroAsistenciasActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activitys.user.BoletaActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activitys.user.QrActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+    </application>
+
+</manifest>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="condicion">
+        <item>Tiempo Completo</item>
+        <item>Medio Tiempo</item>
+        <item>Por Horas</item>
+    </string-array>
+
+
+</resources>

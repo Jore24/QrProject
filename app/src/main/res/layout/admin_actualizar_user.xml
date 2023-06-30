@@ -1,0 +1,141 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".ActualizarUserActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- EditText para el campo nombres -->
+        <EditText
+            android:id="@+id/editTextNombres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombres" />
+
+        <!-- EditText para el campo correo -->
+        <EditText
+            android:id="@+id/editTextCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo" />
+
+        <!-- EditText para el campo contraseña -->
+        <EditText
+            android:id="@+id/editTextContrasena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña" />
+
+        <!-- EditText para el campo sexo -->
+        <EditText
+            android:id="@+id/editTextSexo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sexo" />
+
+        <!-- EditText para el campo teléfono -->
+        <EditText
+            android:id="@+id/editTextTelefono"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Teléfono" />
+
+        <!-- EditText para el campo número de cuenta -->
+        <EditText
+            android:id="@+id/editTextNumeroCuenta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número de cuenta" />
+
+        <!-- EditText para el campo banco -->
+        <EditText
+            android:id="@+id/editTextBanco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Banco" />
+
+        <!-- EditText para el campo DNI -->
+        <EditText
+            android:id="@+id/editTextDni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="DNI" />
+
+        <!-- EditText para el campo fecha de nacimiento -->
+        <EditText
+            android:id="@+id/editTextFechaNacimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de nacimiento" />
+
+        <!-- EditText para el campo jefe -->
+        <EditText
+            android:id="@+id/editTextJefe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jefe" />
+
+        <!-- EditText para el campo dirección -->
+        <EditText
+            android:id="@+id/editTextDireccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dirección" />
+
+        <!-- EditText para el campo distrito -->
+        <EditText
+            android:id="@+id/editTextDistrito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Distrito" />
+
+        <!-- EditText para el campo condición -->
+        <EditText
+            android:id="@+id/editTextCondicion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Condición" />
+
+        <!-- EditText para el campo cargo -->
+        <EditText
+            android:id="@+id/editTextCargo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cargo" />
+
+        <!-- EditText para el campo rol -->
+        <EditText
+            android:id="@+id/editTextRol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Rol" />
+
+        <!-- EditText para el campo estado de cuenta -->
+        <EditText
+            android:id="@+id/editTextEstadoCuenta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Estado de cuenta" />
+
+        <!-- EditText para el campo imagen de perfil -->
+        <EditText
+            android:id="@+id/editTextImagenPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Imagen de perfil" />
+
+        <!-- Botón para actualizar usuario -->
+        <Button
+            android:id="@+id/buttonActualizarUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Actualizar Usuario" />
+
+    </LinearLayout>
+
+</ScrollView>

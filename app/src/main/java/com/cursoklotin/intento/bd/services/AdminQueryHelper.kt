@@ -4,56 +4,17 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.Cursor
-import com.cursoklotin.intento.UserData
+import com.cursoklotin.intento.models.UserData
+import com.cursoklotin.intento.models.EmpleadoData
 import android.util.Log
 
 class AdminQueryHelper(private val db: SQLiteDatabase) {
 
+    fun insertUser(userData: UserData, empleadoData: EmpleadoData): Long {
+        val personaId = insertEmpleado(empleadoData)
 
-    fun insertUser(
-        name: String,
-        email: String,
-        password: String,
-        sexo: String,
-        telefono: String,
-        numeroCuenta: String,
-        banco: String,
-        dni: String,
-        fechaNacimiento: String,
-        jefe: String,
-        direccion: String,
-        distrito: String,
-        condicion: String,
-        cargo: String,
-        rol: String,
-        fechaCreacion: String,
-        ultimaActualizacion: String,
-        estadoCuenta: String,
-        imagenPerfil: String
-    ): Long {
-        val contentValues = ContentValues().apply {
-            put("nombres", name)
-            put("correo", email)
-            put("contrasena", password)
-            put("sexo", sexo)
-            put("telefono", telefono)
-            put("numeroCuenta", numeroCuenta)
-            put("banco", banco)
-            put("dni", dni)
-            put("fechaNacimiento", fechaNacimiento)
-            put("jefe", jefe)
-            put("direccion", direccion)
-            put("distrito", distrito)
-            put("condicion", condicion)
-            put("cargo", cargo)
-            put("rol", rol)
-            put("fechaCreacion", fechaCreacion)
-            put("ultimaActualizacion", ultimaActualizacion)
-            put("estadoCuenta", estadoCuenta)
-            put("imagenPerfil", imagenPerfil)
-        }
-
-        return db.insert("User", null, contentValues)
+        //userData.personaId = personaId.toInt()
+        return db.insert("User", null, userData.toContentValues())
     }
 
     fun obtenerUsuarios(): List<UserData> {
@@ -63,33 +24,21 @@ class AdminQueryHelper(private val db: SQLiteDatabase) {
 
         cursor?.use {
             while (cursor.moveToNext()) {
-                val id = cursor.getInt(cursor.getColumnIndex("id"))
-                val nombres = cursor.getString(cursor.getColumnIndex("nombres"))
-                val correo = cursor.getString(cursor.getColumnIndex("correo"))
-                val contrasena = cursor.getString(cursor.getColumnIndex("contrasena"))
-                val sexo = cursor.getString(cursor.getColumnIndex("sexo"))
-                val telefono = cursor.getString(cursor.getColumnIndex("telefono"))
-                val numeroCuenta = cursor.getString(cursor.getColumnIndex("numeroCuenta"))
-                val banco = cursor.getString(cursor.getColumnIndex("banco"))
-                val dni = cursor.getString(cursor.getColumnIndex("dni"))
-                val fechaNacimiento = cursor.getString(cursor.getColumnIndex("fechaNacimiento"))
-                val jefe = cursor.getString(cursor.getColumnIndex("jefe"))
-                val direccion = cursor.getString(cursor.getColumnIndex("direccion"))
-                val distrito = cursor.getString(cursor.getColumnIndex("distrito"))
-                val condicion = cursor.getString(cursor.getColumnIndex("condicion"))
-                val cargo = cursor.getString(cursor.getColumnIndex("cargo"))
-                val rol = cursor.getString(cursor.getColumnIndex("rol"))
-                val fechaCreacion = cursor.getString(cursor.getColumnIndex("fechaCreacion"))
-                val ultimaActualizacion = cursor.getString(cursor.getColumnIndex("ultimaActualizacion"))
-                val estadoCuenta = cursor.getString(cursor.getColumnIndex("estadoCuenta"))
-                val imagenPerfil = cursor.getString(cursor.getColumnIndex("imagenPerfil"))
-
-                val usuario = UserData(
-                    id, nombres, correo, contrasena, sexo, telefono, numeroCuenta, banco, dni,
-                    fechaNacimiento, jefe, direccion, distrito, condicion, cargo, rol, fechaCreacion,
-                    ultimaActualizacion, estadoCuenta, imagenPerfil
+                val userData = UserData(
+                    idUser = cursor.getInt(cursor.getColumnIndex("id")),
+                    correo = cursor.getString(cursor.getColumnIndex("correo")),
+                    contrasena = cursor.getString(cursor.getColumnIndex("contrasena")),
+                    rol = cursor.getInt(cursor.getColumnIndex("rol")),
+                    fechaInicio = cursor.getString(cursor.getColumnIndex("fechaInicio")),
+                    fechaFin = cursor.getString(cursor.getColumnIndex("fechaFin")),
+                    jefe = cursor.getString(cursor.getColumnIndex("jefe")),
+                    estadoCuenta = cursor.getString(cursor.getColumnIndex("estadoCuenta")),
+                    empleadoId = cursor.getInt(cursor.getColumnIndex("empleadoId")),
+                    cargoId = cursor.getInt(cursor.getColumnIndex("cargoId")),
+                    url = cursor.getString(cursor.getColumnIndex("url"))
                 )
-                usuarios.add(usuario)
+
+                usuarios.add(userData)
             }
         }
 
@@ -100,33 +49,45 @@ class AdminQueryHelper(private val db: SQLiteDatabase) {
         return db.delete("User", "id = ?", arrayOf(id.toString()))
     }
 
-    fun actualizarUsuarioPorId(id: Int, name: String, email: String, password: String, sexo: String, telefono: String, numeroCuenta: String, banco: String, dni: String, fechaNacimiento: String, jefe: String, direccion: String, distrito: String, condicion: String, cargo: String, rol: String, fechaCreacion: String, ultimaActualizacion: String, estadoCuenta: String, imagenPerfil: String): Boolean {
-        val contentValues = ContentValues().apply {
-            put("nombres", name)
-            put("correo", email)
-            put("contrasena", password)
-            put("sexo", sexo)
-            put("telefono", telefono)
-            put("numeroCuenta", numeroCuenta)
-            put("banco", banco)
-            put("dni", dni)
-            put("fechaNacimiento", fechaNacimiento)
-            put("jefe", jefe)
-            put("direccion", direccion)
-            put("distrito", distrito)
-            put("condicion", condicion)
-            put("cargo", cargo)
-            put("rol", rol)
-            put("fechaCreacion", fechaCreacion)
-            put("ultimaActualizacion", ultimaActualizacion)
-            put("estadoCuenta", estadoCuenta)
-            put("imagenPerfil", imagenPerfil)
-        }
+    fun actualizarUsuarioPorId(userData: UserData): Boolean {
+        val contentValues = userData.toContentValues()
 
-        val rowsAffected = db.update("User", contentValues, "id = ?", arrayOf(id.toString()))
+        val rowsAffected = db.update("User", contentValues, "id = ?", arrayOf(userData.idUser.toString()))
         return rowsAffected > 0
     }
 
+    private fun insertEmpleado(empleadoData: EmpleadoData): Long {
+        return db.insert("Empleado", null, empleadoData.toContentValues())
+    }
+}
 
+private fun UserData.toContentValues(): ContentValues {
+    return ContentValues().apply {
+        put("correo", correo)
+        put("contrasena", contrasena)
+        put("rol", rol)
+        put("fechaInicio", fechaInicio)
+        put("fechaFin", fechaFin)
+        put("jefe", jefe)
+        put("estadoCuenta", estadoCuenta)
+        put("personaId", empleadoId)
+        put("cargoId", cargoId)
+        put("url", url)
+    }
+}
 
+private fun EmpleadoData.toContentValues(): ContentValues {
+    return ContentValues().apply {
+        put("nombres", nombres)
+        put("sexo", sexo)
+        put("telefono", telefono)
+        put("dni", dni)
+        put("numeroCuenta", numeroCuenta)
+        put("banco", banco)
+        put("fechaNacimiento", fechaNacimiento)
+        put("direccion", direccion)
+        put("distrito", distrito)
+        put("fechaCreacion", fechaCreacion)
+        put("ultimaActualizacion", ultimaActualizacion)
+    }
 }

@@ -6,7 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.cursoklotin.intento.R
-import com.cursoklotin.intento.models.UserData
+
+
 
 
 import com.cursoklotin.intento.bd.services.AdminQueryHelper
@@ -71,81 +72,9 @@ class RegistrarUserActivity : AppCompatActivity() {
     }
 
     private fun registerAdmin() {
-        val nombres = etAdminName.text.toString()
-        val correo = etAdminEmail.text.toString()
-        val contrasena = etAdminPassword.text.toString()
-        val sexo = etAdminSexo.text.toString()
-        val telefono = etAdminTelefono.text.toString()
-        val numeroCuenta = etAdminNumeroCuenta.text.toString()
-        val banco = etAdminBanco.text.toString()
-        val dni = etAdminDni.text.toString()
-        val fechaNacimiento = etAdminFechaNacimiento.text.toString()
-        val jefe = etAdminJefe.text.toString()
-        val direccion = etAdminDireccion.text.toString()
-        val distrito = etAdminDistrito.text.toString()
-        val condicion = etAdminCondicion.text.toString()
-        val cargo = etAdminCargoId.text.toString()
-        val rol = etAdminRol.text.toString()
-        val fechaCreacion = getCurrentDateTime() // Obtener la fecha actual
-        val ultimaActualizacion = getCurrentDateTime() // Obtener la fecha actual
-        val estadoCuenta = "activo" // Asignar un valor inicial para el estado de cuenta
-        val imagenPerfil = "" // Dejar la imagen de perfil en blanco inicialmente
-
-        if (nombres.isNotEmpty() && correo.isNotEmpty() && contrasena.isNotEmpty() && sexo.isNotEmpty()) {
-            val adminQueryHelper = AdminQueryHelper(db)
-
-            val userData = UserData(
-                id = 0, // El ID se generará automáticamente en la base de datos
-                nombres = nombres,
-                correo = correo,
-                contrasena = contrasena,
-                sexo = sexo,
-                telefono = telefono,
-                numeroCuenta = numeroCuenta,
-                banco = banco,
-                dni = dni,
-                fechaNacimiento = fechaNacimiento,
-                jefe = jefe,
-                direccion = direccion,
-                distrito = distrito,
-                condicion = condicion,
-                cargo = cargo,
-                rol = rol,
-                fechaCreacion = fechaCreacion,
-                ultimaActualizacion = ultimaActualizacion,
-                estadoCuenta = estadoCuenta,
-                imagenPerfil = imagenPerfil
-            )
-
-            if (adminQueryHelper.insertUser(
-                    name = userData.nombres,
-                    email = userData.correo,
-                    password = userData.contrasena,
-                    sexo = userData.sexo,
-                    telefono = userData.telefono,
-                    numeroCuenta = userData.numeroCuenta,
-                    banco = userData.banco,
-                    dni = userData.dni,
-                    fechaNacimiento = userData.fechaNacimiento,
-                    jefe = userData.jefe,
-                    direccion = userData.direccion,
-                    distrito = userData.distrito,
-                    condicion = userData.condicion,
-                    cargo = userData.cargo,
-                    rol = userData.rol,
-                    fechaCreacion = userData.fechaCreacion,
-                    ultimaActualizacion = userData.ultimaActualizacion,
-                    estadoCuenta = userData.estadoCuenta,
-                    imagenPerfil = userData.imagenPerfil
-                ) != -1L
-            ) {
-                Toast.makeText(this, "Administrador registrado exitosamente: ${userData.nombres}", Toast.LENGTH_SHORT).show()
-                finish() // Cerrar la actividad después del registro exitoso
-            } else {
-                Toast.makeText(this, "Error al registrar administrador", Toast.LENGTH_SHORT).show()
-            }
-
-        }
+        return
     }
+
+
 
 }

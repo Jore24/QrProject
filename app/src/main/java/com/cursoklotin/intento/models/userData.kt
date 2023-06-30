@@ -9,7 +9,7 @@ data class UserData(
     var fechaFin: String,
     var jefe: String,
     var estadoCuenta: String,
-    var personaId: Int,
+    var empleadoId: Int,
     var cargoId: Int = -1, // Valor predeterminado para cargoId
     var url: String
 )

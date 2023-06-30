@@ -8,14 +8,14 @@ import android.database.Cursor
 class AuthQueryHelper(private val db: SQLiteDatabase) {
     @SuppressLint("Range")
     fun login(email: String, password: String): Pair<Int, String> {
-        val projection = arrayOf("personaId", "rol")
+        val projection = arrayOf("empleadoId", "rol")
         val selection = "correo = ? AND contrasena = ?"
         val selectionArgs = arrayOf(email, password)
 
-        val cursor: Cursor = db.query("Empleado", projection, selection, selectionArgs, null, null, null)
+        val cursor: Cursor = db.query("Usuario", projection, selection, selectionArgs, null, null, null)
 
         val result: Pair<Int, String> = if (cursor.moveToFirst()) {
-            val personaId = cursor.getInt(cursor.getColumnIndex("personaId"))
+            val personaId = cursor.getInt(cursor.getColumnIndex("empleadoId"))
             val rol = cursor.getString(cursor.getColumnIndex("rol"))
             personaId to rol
         } else {

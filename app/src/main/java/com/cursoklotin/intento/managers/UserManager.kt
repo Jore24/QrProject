@@ -1,8 +1,8 @@
 package com.cursoklotin.intento.managers
-
 import android.content.Context
 import android.content.SharedPreferences
 import com.cursoklotin.intento.models.EmpleadoData
+
 
 class UserManager private constructor(context: Context) {
     companion object {
@@ -22,7 +22,7 @@ class UserManager private constructor(context: Context) {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-    var personId: Int
+    var empleadoId: Int
         get() = sharedPreferences.getInt(KEY_USER_ID, -1)
         set(value) {
             sharedPreferences.edit().putInt(KEY_USER_ID, value).apply()
@@ -30,10 +30,12 @@ class UserManager private constructor(context: Context) {
 
     var empleadoData: EmpleadoData?
         get() {
-            val idPersona = sharedPreferences.getInt("idEmpleado", -1)
+            val idEmpleado = sharedPreferences.getInt("idEmpleado", -1)
+            val idHorario = sharedPreferences.getInt("idHorario", -1)
             val nombres = sharedPreferences.getString("nombres", "") ?: ""
             val sexo = sharedPreferences.getString("sexo", "") ?: ""
             val telefono = sharedPreferences.getString("telefono", "") ?: ""
+            val dni = sharedPreferences.getString("dni", "") ?: ""
             val numeroCuenta = sharedPreferences.getString("numeroCuenta", "") ?: ""
             val banco = sharedPreferences.getString("banco", "") ?: ""
             val fechaNacimiento = sharedPreferences.getString("fechaNacimiento", "") ?: ""
@@ -42,12 +44,14 @@ class UserManager private constructor(context: Context) {
             val fechaCreacion = sharedPreferences.getString("fechaCreacion", "") ?: ""
             val ultimaActualizacion = sharedPreferences.getString("ultimaActualizacion", "") ?: ""
 
-            return if (idPersona != -1) {
+            return if (idEmpleado != -1) {
                 EmpleadoData(
-                    idPersona,
+                    idEmpleado,
+                    idHorario,
                     nombres,
                     sexo,
                     telefono,
+                    dni,
                     numeroCuenta,
                     banco,
                     fechaNacimiento,
@@ -64,9 +68,11 @@ class UserManager private constructor(context: Context) {
             if (value != null) {
                 sharedPreferences.edit().apply {
                     putInt("idEmpleado", value.idEmpleado)
+                    putInt("idHorario", value.idHorario)
                     putString("nombres", value.nombres)
                     putString("sexo", value.sexo)
                     putString("telefono", value.telefono)
+                    putString("dni", value.dni)
                     putString("numeroCuenta", value.numeroCuenta)
                     putString("banco", value.banco)
                     putString("fechaNacimiento", value.fechaNacimiento)
@@ -81,20 +87,20 @@ class UserManager private constructor(context: Context) {
             }
         }
 
-    fun isLoggedIn(): Boolean = personId != -1
+    fun isLoggedIn(): Boolean = empleadoId != -1
 
-    fun updatePersonaData(nuevosNombres: String, nuevoTelefono: String) {
-        val personaData = empleadoData ?: return
+    fun updateEmpleadoData(nuevosNombres: String, nuevoTelefono: String) {
+        val empleadoData = empleadoData ?: return
 
         // Actualizar los campos de nombres y teléfono
-        personaData.nombres = nuevosNombres
-        personaData.telefono = nuevoTelefono
+        empleadoData.nombres = nuevosNombres
+        empleadoData.telefono = nuevoTelefono
 
-        // Guardar los nuevos datos de persona en el estado global
-        this.empleadoData = personaData
+        // Guardar los nuevos datos de empleado en el estado global
+        this.empleadoData = empleadoData
     }
 
-    fun resetPersonaData() {
+    fun resetEmpleadoData() {
         sharedPreferences.edit().clear().apply()
     }
 }

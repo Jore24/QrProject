@@ -1,22 +1,29 @@
 package com.cursoklotin.intento.bd.insertion
+
+import android.content.ContentValues
+import android.database.sqlite.SQLiteDatabase
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.cursoklotin.intento.AsistenciaData
 import com.cursoklotin.intento.QRData
 import com.cursoklotin.intento.models.CargoData
 import com.cursoklotin.intento.models.UserData
 import com.cursoklotin.intento.models.EmpleadoData
-import com.cursoklotin.intento.RegistroAsistenciaData
-
-
-import android.content.ContentValues
-import android.database.sqlite.SQLiteDatabase
-
+import com.cursoklotin.intento.models.HorarioData
+import com.cursoklotin.intento.utils.DateTimeUtils.getCurrentDate
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.util.*
 
 class DataInsertionHelper(private val db: SQLiteDatabase) {
+
     fun insertDefaultData() {
-        insertUserData()
-        insertRegistroAsistenciaData()
-        insertQRData()
-        insertCargoData()//1
-        insertData()//2
+        insertCargoData()
+        insertData()
+        insertDefaultHorarioData()
+        createAsistenciaTable()
+        insertDefaultAsistenciaData()
+        insertDefaultQRData()
 
     }
 
@@ -40,28 +47,28 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                 sueldo = 1551,
                 condicion = "Full Time"
             )
-            // Agrega más datos de ejemplo aquí según tus necesidades
         )
 
         for (cargo in cargos) {
-            val values = ContentValues()
-            values.put("cargo", cargo.cargo)
-            values.put("sueldo", cargo.sueldo)
-            values.put("condicion", cargo.condicion)
+            val values = ContentValues().apply {
+                put("cargo", cargo.cargo)
+                put("sueldo", cargo.sueldo)
+                put("condicion", cargo.condicion)
+            }
 
             db.insert("Cargo", null, values)
         }
     }
 
-
     private fun insertData() {
-        // Insertar datos en la tabla Persona
-        val personas = arrayOf(
+        val empleados = arrayOf(
             EmpleadoData(
-                idPersona = -1,
-                nombres = "John Doeaaaaaa",
+                idEmpleado = -1,
+                idHorario = -1,
+                nombres = "John Doe",
                 sexo = "Masculino",
                 telefono = "987612588",
+                dni = "76057972",
                 numeroCuenta = "894144444441111122233",
                 banco = "BCP",
                 fechaNacimiento = "1990-01-01",
@@ -71,10 +78,12 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                 ultimaActualizacion = "Ultima Actualización"
             ),
             EmpleadoData(
-                idPersona = -1,
+                idEmpleado = -1,
+                idHorario = -1,
                 nombres = "Jane Smith",
                 sexo = "Femenino",
                 telefono = "987612588",
+                dni = "76057972",
                 numeroCuenta = "894144444441111122233",
                 banco = "BCP",
                 fechaNacimiento = "1990-01-01",
@@ -83,28 +92,28 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                 fechaCreacion = "Fecha Creación",
                 ultimaActualizacion = "Ultima Actualización"
             )
-            // Agrega más datos de ejemplo aquí según tus necesidades
         )
 
-        for (persona in personas) {
-            val values = ContentValues()
-            values.put("nombres", persona.nombres)
-            values.put("sexo", persona.sexo)
-            values.put("telefono", persona.telefono)
-            values.put("numeroCuenta", persona.numeroCuenta)
-            values.put("banco", persona.banco)
-            values.put("fechaNacimiento", persona.fechaNacimiento)
-            values.put("direccion", persona.direccion)
-            values.put("distrito", persona.distrito)
-            values.put("fechaCreacion", persona.fechaCreacion)
-            values.put("ultimaActualizacion", persona.ultimaActualizacion)
+        for (empleado in empleados) {
+            val values = ContentValues().apply {
+                put("nombres", empleado.nombres)
+                put("sexo", empleado.sexo)
+                put("telefono", empleado.telefono)
+                put("dni", empleado.dni)
+                put("numeroCuenta", empleado.numeroCuenta)
+                put("banco", empleado.banco)
+                put("fechaNacimiento", empleado.fechaNacimiento)
+                put("direccion", empleado.direccion)
+                put("distrito", empleado.distrito)
+                put("fechaCreacion", empleado.fechaCreacion)
+                put("ultimaActualizacion", empleado.ultimaActualizacion)
+            }
 
-            val personaId = db.insert("Persona", null, values)
+            val empleadoId = db.insert("Empleado", null, values)
 
-            // Insertar datos en la tabla Empleado
-            val empleados = arrayOf(
+            val usuarios = arrayOf(
                 UserData(
-                    idEmpleado = -1,
+                    idUser = -1,
                     correo = "jore@",
                     contrasena = "123",
                     rol = 1,
@@ -112,11 +121,13 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                     fechaFin = "Fecha Fin",
                     jefe = "Jefe A",
                     estadoCuenta = "Activo-Inactivo",
-                    personaId = personaId.toInt(),
-                    cargoId = 1 // ID del cargo correspondiente
+                    empleadoId = empleadoId.toInt(),
+                    cargoId = 1,
+                    url ="https://www.google.com"
+                    // ID del cargo correspondiente
                 ),
                 UserData(
-                    idEmpleado = -1,
+                    idUser = -1,
                     correo = "jane@",
                     contrasena = "123",
                     rol = 2,
@@ -124,162 +135,123 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                     fechaFin = "Fecha Fin",
                     jefe = "Jefe A",
                     estadoCuenta = "Activo-Inactivo",
-                    personaId = personaId.toInt(),
-                    cargoId = 2 // ID del cargo correspondiente
+                    empleadoId = empleadoId.toInt(),
+                    cargoId = 2,
+                    url ="https://www.google.com"
+
+                    // ID del cargo correspondiente
                 )
-                // Agrega más datos de ejemplo aquí según tus necesidades
             )
 
-            for (empleado in empleados) {
+            for (usuario in usuarios) {
                 values.clear()
-                values.put("correo", empleado.correo)
-                values.put("contrasena", empleado.contrasena)
-                values.put("rol", empleado.rol)
-                values.put("fechaInicio", empleado.fechaInicio)
-                values.put("fechaFin", empleado.fechaFin)
-                values.put("jefe", empleado.jefe)
-                values.put("estadoCuenta", empleado.estadoCuenta)
-                values.put("personaId", empleado.personaId)
-                values.put("cargoId", empleado.cargoId)
+                values.apply {
+                    put("correo", usuario.correo)
+                    put("contrasena", usuario.contrasena)
+                    put("rol", usuario.rol)
+                    put("fechaInicio", usuario.fechaInicio)
+                    put("fechaFin", usuario.fechaFin)
+                    put("jefe", usuario.jefe)
+                    put("estadoCuenta", usuario.estadoCuenta)
+                    put("empleadoId", usuario.empleadoId)
+                    put("cargoId", usuario.cargoId)
+                }
 
-                db.insert("Empleado", null, values)
+                db.insert("Usuario", null, values)
             }
         }
     }
 
-
-    private fun insertUserData() {
-        val userData = arrayOf(
-            UserData(
-                id = -1,
-                "John Doeaaaaaa",
-                "jore@",
-                "123",
-                "Masculino",
-                "987612588",
-                "894144444441111122233",
-                "BCP",
-                "76057972",
-                "1990-01-01",
-                "Jefe A",
-                "Dirección A",
-                "Distrito A",
-                "Condición A",
-                "Empleado A ",
-                "1",
-                "Fecha Creación",
-                "Ultima Actualización",
-                "Activo-Inactivo",
-                "www.firebase.com/storage/imagen.jpg"
-                    ),
-            UserData(
-                id = -1,
-                "Jane Smith",
-                "jane@",
-                "123",
-                "Femenino",
-                "987612588",
-                "894144444441111122233",
-                "BCP",
-                "76057972",
-                "1990-01-01",
-                "Jefe A",
-                "Dirección A",
-                "Distrito A",
-                "Condición A",
-                "Empleado A ",
-                "2",
-                "Fecha Creación",
-                "Ultima Actualización",
-                "Activo-Inactivo",
-                "www.firebase.com/storage/imagen.jpg"
-                    )
-            // Agrega más datos de ejemplo aquí según tus necesidades
+    private fun insertDefaultQRData() {
+        val qrDataList = listOf(
+            QRData(1, "QR1", "Estado 1"),
+            QRData(2, "QR2", "Estado 2"),
+            QRData(3, "QR3", "Estado 3")
         )
 
-        val values = ContentValues()
+        for (qrData in qrDataList) {
+            val query = "INSERT INTO QR(id, codigo, estado) VALUES (?, ?, ?)"
+            val statement = db.compileStatement(query)
 
-        for (data in userData) {
-            values.put("nombres", data.nombres)
-            values.put("correo", data.correo)
-            values.put("contrasena", data.contrasena)
-            values.put("telefono", data.telefono)
-            values.put("sexo", data.sexo)
-            values.put("numeroCuenta", data.numeroCuenta)
-            values.put("banco", data.banco)
-            values.put("dni", data.dni)
-            values.put("fechaNacimiento", data.fechaNacimiento)
-            values.put("jefe", data.jefe)
-            values.put("direccion", data.direccion)
-            values.put("distrito", data.distrito)
-            values.put("condicion", data.condicion)
-            values.put("cargo", data.cargo)
-            values.put("rol", data.rol)
-            values.put("fechaCreacion", data.fechaCreacion)
-            values.put("ultimaActualizacion", data.ultimaActualizacion)
-            values.put("estadoCuenta", data.estadoCuenta)
-            values.put("imagenPerfil", data.imagenPerfil)
+            statement.bindLong(1, qrData.id.toLong())
+            statement.bindString(2, qrData.codigo)
+            statement.bindString(3, qrData.estado)
 
-            db.insert("User", null, values)
-            values.clear()
+            statement.executeInsert()
         }
     }
 
-    private fun insertRegistroAsistenciaData() {
-        val defaultData = arrayOf(
-            RegistroAsistenciaData(
-                1,
-                "2023-05-29",
-                "08:00:00",
-                "17:00:00",
-                0.1f,
-                1,
-                1
-            ),
-            RegistroAsistenciaData(
-                2,
-                "2023-05-30",
-                "09:00:00",
-                "18:00:00",
-                1.5f,
-                2,
-                2
-            )
-            // Agrega más datos de ejemplo aquí según tus necesidades
+    val horaEntrada = Calendar.getInstance()
+    val horaSalida = Calendar.getInstance()
+
+    private fun insertDefaultHorarioData() {
+            horaEntrada.set(Calendar.HOUR_OF_DAY, 9) // Hora de entrada a las 9:00 AM
+            horaEntrada.set(Calendar.MINUTE, 0)
+
+            horaSalida.set(Calendar.HOUR_OF_DAY, 18) // Hora de salida a las 6:00 PM
+            horaSalida.set(Calendar.MINUTE, 0)
+
+        val horarioDataList = listOf(
+            HorarioData(0, "Lunes", horaEntrada, horaSalida),
+            HorarioData(0, "Martes", horaEntrada, horaSalida),
         )
 
-        val values = ContentValues()
+        for (horarioData in horarioDataList) {
+            val query = "INSERT INTO Horario(diaSemana, entrada, salida) VALUES (?, ?, ?)"
+            val statement = db.compileStatement(query)
 
-        for (data in defaultData) {
-            values.put("id", data.id)
-            values.put("fecha", data.fecha)
-            values.put("hora_entrada", data.hora_entrada)
-            values.put("hora_salida", data.hora_salida)
-            values.put("llegada_tarde", data.llegada_tarde)
-            values.put("empleado_id", data.empleado_id)
-            values.put("codigo_id", data.codigo_id)
+            statement.bindString(1, horarioData.diaSemana)
+            statement.bindString(2, horarioData.entrada.time.toString())
+            statement.bindString(3, horarioData.salida.time.toString())
 
-            db.insert("RegistrarAsistencia", null, values)
-            values.clear()
+            statement.executeInsert()
         }
     }
 
-    private fun insertQRData() {
-        val qrData = arrayOf(
-            QRData(1, "codigo1", "Descripción 1", 0),
-            QRData(2, "codigo2", "Descripción 2", 0)
-            // Agrega más datos de ejemplo aquí según tus necesidades
+
+    private fun createAsistenciaTable() {
+        val query = "CREATE TABLE IF NOT EXISTS Asistencia (" +
+                "idAsistencia INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "idEmpleado INTEGER," +
+                "idQR INTEGER," +
+                "fecha TEXT," +
+                "horaEntrada TEXT," +
+                "horaSalida TEXT," +
+                "estadoAsistencia INTEGER," +
+                "FOREIGN KEY(idEmpleado) REFERENCES Empleado(idEmpleado)," +
+                "FOREIGN KEY(idQR) REFERENCES QR(idQR)" +
+                ")"
+        db.execSQL(query)
+    }
+
+    private fun insertDefaultAsistenciaData() {
+        val currentDate = getCurrentDate()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        val asistenciaDataList = listOf(
+            AsistenciaData(0, 1, 1, currentDate, horaEntrada, horaEntrada, 1),
+            AsistenciaData(0, 2, 2, currentDate, horaEntrada, horaEntrada, 1),
+            AsistenciaData(0, 3, 3, currentDate, horaEntrada, horaEntrada, 1)
         )
 
-        for (data in qrData) {
-            val values = ContentValues().apply {
-                put("id", data.id)
-                put("codigo", data.codigo)
-                put("descripcion", data.descripcion)
-                put("is_used", data.isUsed)
-            }
-            db.insert("QR", null, values)
+        for (asistenciaData in asistenciaDataList) {
+            val query = "INSERT INTO Asistencia(idEmpleado, idQR, fecha, horaEntrada, horaSalida, estadoAsistencia) VALUES (?, ?, ?, ?, ?, ?)"
+            val statement = db.compileStatement(query)
+
+            statement.bindLong(1, asistenciaData.idEmpleado.toLong())
+            statement.bindLong(2, asistenciaData.idQR.toLong())
+            statement.bindString(3, dateFormat.format(asistenciaData.fecha.time))
+            statement.bindLong(4, asistenciaData.horaEntrada.timeInMillis)
+            statement.bindLong(5, asistenciaData.horaSalida.timeInMillis)
+            statement.bindLong(6, asistenciaData.estadoAsistencia.toLong())
+
+            statement.executeInsert()
         }
     }
 
-}
+
+
+    }
+
+
+

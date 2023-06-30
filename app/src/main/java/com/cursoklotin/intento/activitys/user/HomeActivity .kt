@@ -19,9 +19,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_home)
         userManager = UserManager.getInstance(applicationContext)
-        val personData = userManager.personaData
-        if (personData != null) {
-            Toast.makeText(this, "Bienvenido ${personData.nombres}", Toast.LENGTH_LONG).show()
+        val empleadoData = userManager.empleadoData
+        if (empleadoData != null) {
+            Toast.makeText(this, "Bienvenido ${empleadoData.nombres}", Toast.LENGTH_LONG).show()
         }
 
         // Configurar los listeners de clic para los botones
@@ -34,7 +34,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
         cerrarSesionButton.setOnClickListener {
             // Reiniciar el estado global y cerrar la sesión
-            userManager.resetPersonaData()
+            userManager.resetEmpleadoData()
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -53,8 +53,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             finishAffinity()
         } else {
             // El usuario ha iniciado sesión, acceder a los datos del usuario
-            val personData = userManager.personaData
-            if (personData != null) {
+            val empleadoData = userManager.empleadoData
+            if (empleadoData != null) {
                 // Los datos del usuario están disponibles, puedes utilizarlos
                 // Aquí puedes actualizar la interfaz de usuario con los datos del usuario si es necesario
             }
@@ -67,8 +67,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             R.id.buttonPerfil -> {
                 // Navegar a la pantalla de Perfil
                 userManager = UserManager.getInstance(applicationContext)
-                val personData = userManager.personaData
-                Toast.makeText(this, "Bienvenido ${personData?.nombres}", Toast.LENGTH_LONG).show()
+                val empleadoData = userManager.empleadoData
+                Toast.makeText(this, "Bienvenido ${empleadoData?.nombres}", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, PerfilActivity::class.java)
                 startActivity(intent)
             }

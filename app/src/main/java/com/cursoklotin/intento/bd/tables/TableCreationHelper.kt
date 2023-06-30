@@ -2,131 +2,99 @@ package com.cursoklotin.intento.bd.tables
 
 import android.database.sqlite.SQLiteDatabase
 
-
 class TableCreationHelper(private val db: SQLiteDatabase) {
     fun createTables() {
         createUserTable()
         createCargoTable()
         createEmpleadoTable()
-        createRegistrarAsistenciaTable()
+        createScheduleTable()
+        createAttendanceTable()
         createQRTable()
-        createPersonaTable()
-    }
-
-
-    private fun createPersonaTable() {
-        val query = """
-        CREATE TABLE IF NOT EXISTS Persona (
-            idPersona INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombres TEXT,
-            sexo TEXT,
-            telefono TEXT,
-            numeroCuenta TEXT,
-            banco TEXT,
-            fechaNacimiento TEXT,
-            direccion TEXT,
-            distrito TEXT,
-            fechaCreacion TEXT,
-            ultimaActualizacion TEXT
-        )
-    """.trimIndent()
-
-        db.execSQL(query)
     }
 
     private fun createCargoTable() {
-        val query = """
-        CREATE TABLE IF NOT EXISTS Cargo (
-            idCargo INTEGER PRIMARY KEY AUTOINCREMENT,
-            cargo TEXT,
-            sueldo INTEGER,
-            condicion TEXT
-        )
-    """.trimIndent()
-
+        val query = "CREATE TABLE IF NOT EXISTS Cargo (" +
+                "idCargo INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "cargo TEXT," +
+                "sueldo INTEGER," +
+                "condicion TEXT" +
+                ")"
         db.execSQL(query)
     }
 
     private fun createEmpleadoTable() {
-        val query = """
-        CREATE TABLE IF NOT EXISTS Empleado (
-            idEmpleado INTEGER PRIMARY KEY AUTOINCREMENT,
-            correo TEXT,
-            contrasena TEXT,
-            rol INTEGER,
-            fechaInicio TEXT,
-            fechaFin TEXT,
-            jefe TEXT,
-            estadoCuenta TEXT,
-            personaId INTEGER,
-            cargoId INTEGER,
-            FOREIGN KEY (personaId) REFERENCES Persona (idPersona),
-            FOREIGN KEY (cargoId) REFERENCES Cargo (idCargo)
-        )
-    """.trimIndent()
-
+        val query = "CREATE TABLE IF NOT EXISTS Empleado (" +
+                "idEmpleado INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "idHorario INTEGER," +
+                "nombres TEXT," +
+                "sexo TEXT," +
+                "telefono TEXT," +
+                "dni TEXT," +
+                "numeroCuenta TEXT," +
+                "banco TEXT," +
+                "fechaNacimiento TEXT," +
+                "direccion TEXT," +
+                "distrito TEXT," +
+                "fechaCreacion TEXT," +
+                "ultimaActualizacion TEXT," +
+                "FOREIGN KEY(idHorario) REFERENCES Horario(idHorario)" +
+                ")"
         db.execSQL(query)
     }
+
 
     private fun createUserTable() {
-        val query = """
-            CREATE TABLE IF NOT EXISTS User (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nombres TEXT,
-                correo TEXT,
-                contrasena TEXT,
-                sexo TEXT,
-                telefono TEXT,
-                numeroCuenta TEXT,
-                banco TEXT,
-                dni TEXT,
-                fechaNacimiento TEXT,
-                jefe TEXT,
-                direccion TEXT,
-                distrito TEXT,
-                condicion TEXT,
-                cargo TEXT,
-                rol INTEGER,
-                fechaCreacion TEXT,
-                ultimaActualizacion TEXT,
-                estadoCuenta TEXT,
-                imagenPerfil TEXT
-     
-            )
-        """.trimIndent()
-
+        val query = "CREATE TABLE IF NOT EXISTS Usuario (" +
+                "idUser INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "correo TEXT," +
+                "contrasena TEXT," +
+                "rol INTEGER," +
+                "fechaInicio TEXT," +
+                "fechaFin TEXT," +
+                "jefe TEXT," +
+                "estadoCuenta TEXT," +
+                "empleadoId INTEGER," +
+                "cargoId INTEGER," +
+                "url TEXT," +
+                "FOREIGN KEY(empleadoId) REFERENCES Empleado(idEmpleado)," +
+                "FOREIGN KEY(cargoId) REFERENCES Cargo(idCargo)" +
+                ")"
         db.execSQL(query)
     }
-    private fun createRegistrarAsistenciaTable() {
-        val query = """
-            CREATE TABLE IF NOT EXISTS RegistrarAsistencia (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                fecha DATE,
-                hora_entrada TIME,
-                hora_salida TIME,
-                llegada_tarde FLOAT,
-                empleado_id INT,
-                codigo_id INT,
-                FOREIGN KEY (empleado_id) REFERENCES User(id),
-                FOREIGN KEY (codigo_id) REFERENCES QR(id)
-            )
-        """.trimIndent()
 
+    private fun createScheduleTable() {
+        val query = "CREATE TABLE IF NOT EXISTS Horario (" +
+                "idHorario INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "diaSemana TEXT," +
+                "entrada TEXT," +
+                "salida TEXT," +
+                "empleadoId INTEGER," +
+                "FOREIGN KEY(empleadoId) REFERENCES Empleado(idEmpleado)" +
+                ")"
+        db.execSQL(query)
+    }
+
+    private fun createAttendanceTable() {
+        val query = "CREATE TABLE IF NOT EXISTS Asistencia (" +
+                "idAsistencia INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "idEmpleado INTEGER," +
+                "idQR INTEGER," +
+                "fecha TEXT," +
+                "horaEntrada TEXT," +
+                "horaSalida TEXT," +
+                "estadoAsistencia INTEGER," +
+                "FOREIGN KEY(idEmpleado) REFERENCES Empleado(idEmpleado)," +
+                "FOREIGN KEY(idQR) REFERENCES QR(id)" +
+                ")"
         db.execSQL(query)
     }
 
     private fun createQRTable() {
-        val query = """
-            CREATE TABLE IF NOT EXISTS QR (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                codigo TEXT,
-                descripcion TEXT,
-                is_used INT DEFAULT 0
-            )
-        """.trimIndent()
-
+        val query = "CREATE TABLE IF NOT EXISTS QR (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "codigo TEXT," +
+                "estado TEXT" +
+                ")"
         db.execSQL(query)
     }
-
 }
-

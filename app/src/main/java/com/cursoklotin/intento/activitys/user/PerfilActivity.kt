@@ -29,12 +29,12 @@ class PerfilActivity : AppCompatActivity() {
 
         // Obtener los datos del usuario desde el estado global (UserManager)
         val userManager = UserManager.getInstance(applicationContext)
-        val personData = userManager.personaData
+        val empleadoData = userManager.empleadoData
 
         // Mostrar los datos del usuario en las vistas correspondientes
-        nombresTextView.text = "Nombres: ${personData?.nombres}"
-        correoEditText.setText(personData?.nombres)
-        telefonoEditText.setText(personData?.nombres)
+        nombresTextView.text = "Nombres: ${empleadoData?.nombres}"
+        correoEditText.setText(empleadoData?.nombres)
+        telefonoEditText.setText(empleadoData?.nombres)
 
         // Configurar el click listener para el botón "Editar"
         editarButton.setOnClickListener {
@@ -49,7 +49,7 @@ class PerfilActivity : AppCompatActivity() {
             val nuevoTelefono = telefonoEditText.text.toString()
 
             // Actualizar los datos del usuario en el estado global (UserManager)
-            userManager.updatePersonaData(nuevoCorreo, nuevoTelefono)
+            userManager.updateEmpleadoData(nuevoCorreo, nuevoTelefono)
 
             // Mostrar los nuevos valores en las vistas correspondientes
             correoEditText.setText(nuevoCorreo)

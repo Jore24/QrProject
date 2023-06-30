@@ -9,11 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cursoklotin.intento.R
 import com.cursoklotin.intento.managers.UserManager
 import com.cursoklotin.intento.bd.DatabaseHelper
-import com.cursoklotin.intento.bd.services.UserQueryHelper
 import com.cursoklotin.intento.bd.services.AuthQueryHelper
-import com.cursoklotin.intento.bd.services.PersonQueryHelper
 import com.cursoklotin.intento.activitys.admin.HomeAdminActivity
-
+import com.cursoklotin.intento.bd.services.EmployeQueryHelper
 
 
 class LoginActivity : AppCompatActivity() {
@@ -43,17 +41,18 @@ class LoginActivity : AppCompatActivity() {
             val db: SQLiteDatabase = databaseHelper.writableDatabase
 
             val authQueryHelper = AuthQueryHelper(db)
-            val (personaId, rol) = authQueryHelper.login(email, password)
+            val (empleadoId, rol) = authQueryHelper.login(email, password)
 
-            val personQueryHelper = PersonQueryHelper(db)
-            val personData = personQueryHelper.getPersonById(personaId)
+            val employeQueryHelper = EmployeQueryHelper(db)
+            val empleadoData = employeQueryHelper.getEmployeById(empleadoId)
 
-            if (personaId != -1) {
+            if (empleadoId != -1) {
                 // El inicio de sesión fue exitoso, pasar el ID del usuario a la siguiente actividad
-                userManager.personId = personaId
-                userManager.personaData = personData
+                userManager.empleadoId = empleadoId //verificar que hay en el manager
+                userManager.empleadoData = empleadoData //setiar el empleado en el manager
 
-                if (rol == "2"){ // 2 es el rol de administrador
+                //rol es int
+                if (rol.toInt() == 2) {
                     val intent = Intent(this, HomeAdminActivity::class.java)
                     startActivity(intent)
                 } else {
@@ -68,6 +67,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // Configurar click listener para el botón de cerrar sesión
-
     }
+
+    //funciones
+
+
 }

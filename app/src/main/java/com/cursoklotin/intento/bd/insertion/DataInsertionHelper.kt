@@ -19,9 +19,8 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
 
     fun insertDefaultData() {
         insertCargoData()
-        insertData()
+        insertDataEmpleados()
         insertDefaultHorarioData()
-        createAsistenciaTable()
         insertDefaultAsistenciaData()
         insertDefaultQRData()
 
@@ -60,12 +59,39 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
         }
     }
 
-    private fun insertData() {
+    val horaEntrada = Calendar.getInstance()
+    val horaSalida = Calendar.getInstance()
+
+    private fun insertDefaultHorarioData() {
+        horaEntrada.set(Calendar.HOUR_OF_DAY, 9) // Hora de entrada a las 9:00 AM
+        horaEntrada.set(Calendar.MINUTE, 0)
+
+        horaSalida.set(Calendar.HOUR_OF_DAY, 18) // Hora de salida a las 6:00 PM
+        horaSalida.set(Calendar.MINUTE, 0)
+
+        val horarioDataList = listOf(
+            HorarioData(0, "Lunes", horaEntrada, horaSalida),
+            HorarioData(0, "Martes", horaEntrada, horaSalida),
+        )
+
+        for (horarioData in horarioDataList) {
+            val query = "INSERT INTO Horario(diaSemana, entrada, salida) VALUES (?, ?, ?)"
+            val statement = db.compileStatement(query)
+
+            statement.bindString(1, horarioData.diaSemana)
+            statement.bindString(2, horarioData.entrada.time.toString())
+            statement.bindString(3, horarioData.salida.time.toString())
+
+            statement.executeInsert()
+        }
+    }
+
+    private fun insertDataEmpleados() {
         val empleados = arrayOf(
             EmpleadoData(
                 idEmpleado = -1,
-                idHorario = -1,
-                nombres = "John Doe",
+                idHorario = 1,
+                nombres = "Aron Sebastian",
                 sexo = "Masculino",
                 telefono = "987612588",
                 dni = "76057972",
@@ -79,9 +105,9 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
             ),
             EmpleadoData(
                 idEmpleado = -1,
-                idHorario = -1,
-                nombres = "Jane Smith",
-                sexo = "Femenino",
+                idHorario = 2,
+                nombres = "Jorge Ore",
+                sexo = "Masculino",
                 telefono = "987612588",
                 dni = "76057972",
                 numeroCuenta = "894144444441111122233",
@@ -96,6 +122,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
 
         for (empleado in empleados) {
             val values = ContentValues().apply {
+                put("idHorario", empleado.idHorario)
                 put("nombres", empleado.nombres)
                 put("sexo", empleado.sexo)
                 put("telefono", empleado.telefono)
@@ -155,6 +182,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                     put("estadoCuenta", usuario.estadoCuenta)
                     put("empleadoId", usuario.empleadoId)
                     put("cargoId", usuario.cargoId)
+                    put("url", usuario.url)
                 }
 
                 db.insert("Usuario", null, values)
@@ -181,57 +209,35 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
         }
     }
 
-    val horaEntrada = Calendar.getInstance()
-    val horaSalida = Calendar.getInstance()
-
-    private fun insertDefaultHorarioData() {
-            horaEntrada.set(Calendar.HOUR_OF_DAY, 9) // Hora de entrada a las 9:00 AM
-            horaEntrada.set(Calendar.MINUTE, 0)
-
-            horaSalida.set(Calendar.HOUR_OF_DAY, 18) // Hora de salida a las 6:00 PM
-            horaSalida.set(Calendar.MINUTE, 0)
-
-        val horarioDataList = listOf(
-            HorarioData(0, "Lunes", horaEntrada, horaSalida),
-            HorarioData(0, "Martes", horaEntrada, horaSalida),
-        )
-
-        for (horarioData in horarioDataList) {
-            val query = "INSERT INTO Horario(diaSemana, entrada, salida) VALUES (?, ?, ?)"
-            val statement = db.compileStatement(query)
-
-            statement.bindString(1, horarioData.diaSemana)
-            statement.bindString(2, horarioData.entrada.time.toString())
-            statement.bindString(3, horarioData.salida.time.toString())
-
-            statement.executeInsert()
-        }
-    }
-
-
-    private fun createAsistenciaTable() {
-        val query = "CREATE TABLE IF NOT EXISTS Asistencia (" +
-                "idAsistencia INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "idEmpleado INTEGER," +
-                "idQR INTEGER," +
-                "fecha TEXT," +
-                "horaEntrada TEXT," +
-                "horaSalida TEXT," +
-                "estadoAsistencia INTEGER," +
-                "FOREIGN KEY(idEmpleado) REFERENCES Empleado(idEmpleado)," +
-                "FOREIGN KEY(idQR) REFERENCES QR(idQR)" +
-                ")"
-        db.execSQL(query)
-    }
 
     private fun insertDefaultAsistenciaData() {
         val currentDate = getCurrentDate()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+        val horaEntrada1 = Calendar.getInstance()
+        horaEntrada1.set(Calendar.HOUR_OF_DAY, 12) // Establecer la hora de entrada a las 12:00
+        horaEntrada1.set(Calendar.MINUTE, 0)
+        horaEntrada1.set(Calendar.SECOND, 0)
+
+        val horaEntrada2 = Calendar.getInstance()
+        horaEntrada2.set(Calendar.HOUR_OF_DAY, 13) // Establecer la hora de entrada a las 13:00
+        horaEntrada2.set(Calendar.MINUTE, 0)
+        horaEntrada2.set(Calendar.SECOND, 0)
+
+        val horaSalida1 = Calendar.getInstance()
+        horaSalida1.set(Calendar.HOUR_OF_DAY, 16) // Establecer la hora de salida a las 16:00
+        horaSalida1.set(Calendar.MINUTE, 0)
+        horaSalida1.set(Calendar.SECOND, 0)
+
+        val horaSalida2 = Calendar.getInstance()
+        horaSalida2.set(Calendar.HOUR_OF_DAY, 17) // Establecer la hora de salida a las 17:00
+        horaSalida2.set(Calendar.MINUTE, 0)
+        horaSalida2.set(Calendar.SECOND, 0)
 
         val asistenciaDataList = listOf(
-            AsistenciaData(0, 1, 1, currentDate, horaEntrada, horaEntrada, 1),
-            AsistenciaData(0, 2, 2, currentDate, horaEntrada, horaEntrada, 1),
-            AsistenciaData(0, 3, 3, currentDate, horaEntrada, horaEntrada, 1)
+            AsistenciaData(0, 1, 1, currentDate, horaEntrada1, horaSalida1, 1),
+            AsistenciaData(0, 2, 2, currentDate, horaEntrada2, horaSalida2, 1)
         )
 
         for (asistenciaData in asistenciaDataList) {
@@ -241,17 +247,21 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
             statement.bindLong(1, asistenciaData.idEmpleado.toLong())
             statement.bindLong(2, asistenciaData.idQR.toLong())
             statement.bindString(3, dateFormat.format(asistenciaData.fecha.time))
-            statement.bindLong(4, asistenciaData.horaEntrada.timeInMillis)
-            statement.bindLong(5, asistenciaData.horaSalida.timeInMillis)
+            statement.bindString(4, timeFormat.format(asistenciaData.horaEntrada.time))
+            statement.bindString(5, timeFormat.format(asistenciaData.horaSalida.time))
             statement.bindLong(6, asistenciaData.estadoAsistencia.toLong())
 
             statement.executeInsert()
+
+            // Imprimir las horas de entrada y salida formateadas
+            println("Hora de entrada: ${timeFormat.format(asistenciaData.horaEntrada.time)}")
+            println("Hora de salida: ${timeFormat.format(asistenciaData.horaSalida.time)}")
         }
     }
 
 
 
-    }
+}
 
 
 

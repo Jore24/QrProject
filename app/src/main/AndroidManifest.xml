@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Intento"
         tools:targetApi="31">
+
+
+        <activity
+            android:name=".activitys.user.FinalizarJornada"
+            android:exported="false" />
+
         <activity
             android:name=".activitys.admin.ListarUsersActivity"
             android:exported="false" />
@@ -41,8 +47,7 @@
         <activity
             android:name=".activitys.auth.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.Intento"
-            >
+            android:theme="@style/Theme.Intento">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,6 +79,10 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

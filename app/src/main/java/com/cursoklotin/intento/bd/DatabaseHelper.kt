@@ -1,15 +1,15 @@
 package com.cursoklotin.intento.bd
+
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.cursoklotin.intento.bd.insertion.DataInsertionHelper
 import com.cursoklotin.intento.bd.tables.TableCreationHelper
 
-
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_NAME = "databaseMovil.db"
+        private const val DATABASE_NAME = "b.db"
         private const val DATABASE_VERSION = 1
     }
 
@@ -32,5 +32,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         onCreate(db)
     }
 }
+
 
 

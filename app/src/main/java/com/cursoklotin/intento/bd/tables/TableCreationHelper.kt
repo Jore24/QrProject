@@ -12,6 +12,16 @@ class TableCreationHelper(private val db: SQLiteDatabase) {
         createQRTable()
     }
 
+    private fun createScheduleTable() {
+        val query = "CREATE TABLE IF NOT EXISTS Horario (" +
+                "idHorario INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "diaSemana TEXT," +
+                "entrada TEXT," +
+                "salida TEXT" +
+                ")"
+        db.execSQL(query)
+    }
+
     private fun createCargoTable() {
         val query = "CREATE TABLE IF NOT EXISTS Cargo (" +
                 "idCargo INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -62,14 +72,11 @@ class TableCreationHelper(private val db: SQLiteDatabase) {
         db.execSQL(query)
     }
 
-    private fun createScheduleTable() {
-        val query = "CREATE TABLE IF NOT EXISTS Horario (" +
-                "idHorario INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "diaSemana TEXT," +
-                "entrada TEXT," +
-                "salida TEXT," +
-                "empleadoId INTEGER," +
-                "FOREIGN KEY(empleadoId) REFERENCES Empleado(idEmpleado)" +
+    private fun createQRTable() {
+        val query = "CREATE TABLE IF NOT EXISTS QR (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "codigo TEXT," +
+                "estado TEXT" +
                 ")"
         db.execSQL(query)
     }
@@ -89,12 +96,4 @@ class TableCreationHelper(private val db: SQLiteDatabase) {
         db.execSQL(query)
     }
 
-    private fun createQRTable() {
-        val query = "CREATE TABLE IF NOT EXISTS QR (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "codigo TEXT," +
-                "estado TEXT" +
-                ")"
-        db.execSQL(query)
-    }
 }

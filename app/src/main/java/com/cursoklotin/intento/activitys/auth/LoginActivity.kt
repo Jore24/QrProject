@@ -19,12 +19,10 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
-    private lateinit var cerrarSesionButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
-        getSupportActionBar()?.hide();
         userManager = UserManager.getInstance(applicationContext)
 
         // Inicializar vistas

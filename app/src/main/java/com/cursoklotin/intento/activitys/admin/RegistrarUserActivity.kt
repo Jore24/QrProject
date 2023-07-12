@@ -72,6 +72,7 @@ class RegistrarUserActivity : AppCompatActivity() {
     }
 
     private fun registerAdmin() {
+        //función para registrar un usuario
         return
     }
 

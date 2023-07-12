@@ -4,5 +4,6 @@ data class CargoData(
     var idCargo: Int,
     var cargo: String,
     var sueldo: Int,
-    var condicion: String
+    var condicion: String,
+    var servicio: String
 )

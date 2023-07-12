@@ -1,5 +1,6 @@
 package com.cursoklotin.intento.activitys.admin
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.cursoklotin.intento.R
@@ -12,15 +13,13 @@ import com.cursoklotin.intento.bd.DatabaseHelper
 import android.database.sqlite.SQLiteDatabase
 
 class EliminarUserActivity : AppCompatActivity() {
-    private lateinit var db: SQLiteDatabase
-    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var adminQueryHelper: AdminQueryHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_eliminar_user)
 
-        dbHelper = DatabaseHelper(this)
-        db = dbHelper.writableDatabase
+        adminQueryHelper = AdminQueryHelper(this)
 
         val userId = obtenerUserIdDesdeIntent() // Obtén el ID del usuario que se desea eliminar desde el intent
 
@@ -28,7 +27,6 @@ class EliminarUserActivity : AppCompatActivity() {
     }
 
     private fun eliminarUsuario(id: Int) {
-        val adminQueryHelper = AdminQueryHelper(db)
         val filasAfectadas = adminQueryHelper.eliminarUsuarioPorId(id)
 
         if (filasAfectadas > 0) {

@@ -25,26 +25,31 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
         insertDefaultQRData()
 
     }
+    val horaEntrada = Calendar.getInstance()
+    val horaSalida = Calendar.getInstance()
 
     private fun insertCargoData() {
         val cargos = arrayOf(
             CargoData(
                 idCargo = -1,
-                cargo = "Gerente",
+                cargo = "Guardia",
                 sueldo = 5000,
-                condicion = "Full Time"
+                condicion = "Full Time",
+                servicio = "Seguridad"
             ),
             CargoData(
                 idCargo = -1,
-                cargo = "Empleado",
+                cargo = "Agente",
                 sueldo = 1205,
-                condicion = "Part Time"
+                condicion = "Part Time",
+                servicio = "Atención al cliente"
             ),
             CargoData(
                 idCargo = -1,
                 cargo = "Asistente",
                 sueldo = 1551,
-                condicion = "Full Time"
+                condicion = "Full Time",
+                servicio = "Atención al cliente"
             )
         )
 
@@ -53,14 +58,14 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                 put("cargo", cargo.cargo)
                 put("sueldo", cargo.sueldo)
                 put("condicion", cargo.condicion)
+                put("servicio", cargo.servicio)
             }
 
             db.insert("Cargo", null, values)
         }
     }
 
-    val horaEntrada = Calendar.getInstance()
-    val horaSalida = Calendar.getInstance()
+
 
     private fun insertDefaultHorarioData() {
         horaEntrada.set(Calendar.HOUR_OF_DAY, 9) // Hora de entrada a las 9:00 AM
@@ -91,7 +96,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
             EmpleadoData(
                 idEmpleado = -1,
                 idHorario = 1,
-                nombres = "Aron Sebastian",
+                nombres = "Jorge Ore",
                 sexo = "Masculino",
                 telefono = "987612588",
                 dni = "76057972",
@@ -106,8 +111,8 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
             EmpleadoData(
                 idEmpleado = -1,
                 idHorario = 2,
-                nombres = "Jorge Ore",
-                sexo = "Masculino",
+                nombres = "Clarita Maria",
+                sexo = "Femenino",
                 telefono = "987612588",
                 dni = "76057972",
                 numeroCuenta = "894144444441111122233",
@@ -143,7 +148,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                     idUser = -1,
                     correo = "jore@",
                     contrasena = "123",
-                    rol = 1,
+                    rol = 2,
                     fechaInicio = "Fecha Inicio",
                     fechaFin = "Fecha Fin",
                     jefe = "Jefe A",
@@ -151,13 +156,12 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                     empleadoId = empleadoId.toInt(),
                     cargoId = 1,
                     url ="https://www.google.com"
-                    // ID del cargo correspondiente
                 ),
                 UserData(
                     idUser = -1,
                     correo = "jane@",
                     contrasena = "123",
-                    rol = 2,
+                    rol = 1,
                     fechaInicio = "Fecha Inicio",
                     fechaFin = "Fecha Fin",
                     jefe = "Jefe A",
@@ -165,12 +169,17 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                     empleadoId = empleadoId.toInt(),
                     cargoId = 2,
                     url ="https://www.google.com"
-
-                    // ID del cargo correspondiente
                 )
             )
 
             for (usuario in usuarios) {
+                val correoExistente = checkExistingUsuario(usuario.correo)
+
+                if (correoExistente) {
+                    // El usuario ya existe, omitir la inserción
+                    continue
+                }
+
                 values.clear()
                 values.apply {
                     put("correo", usuario.correo)
@@ -189,6 +198,16 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
             }
         }
     }
+
+    private fun checkExistingUsuario(correo: String): Boolean {
+        val query = "SELECT COUNT(*) FROM Usuario WHERE correo = ?"
+        val cursor = db.rawQuery(query, arrayOf(correo))
+        val count = if (cursor.moveToFirst()) cursor.getInt(0) else 0
+        cursor.close()
+        return count > 0
+    }
+
+
 
     private fun insertDefaultQRData() {
         val qrDataList = listOf(
@@ -215,7 +234,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-        val horaEntrada1 = Calendar.getInstance()
+        val horaEntrada1 = Calendar.getInstance() //declarar fuera esta instancia para que no se repita
         horaEntrada1.set(Calendar.HOUR_OF_DAY, 12) // Establecer la hora de entrada a las 12:00
         horaEntrada1.set(Calendar.MINUTE, 0)
         horaEntrada1.set(Calendar.SECOND, 0)

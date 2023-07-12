@@ -34,7 +34,7 @@ class PerfilActivity : AppCompatActivity() {
         // Mostrar los datos del usuario en las vistas correspondientes
         nombresTextView.text = "Nombres: ${empleadoData?.nombres}"
         correoEditText.setText(empleadoData?.nombres)
-        telefonoEditText.setText(empleadoData?.nombres)
+        telefonoEditText.setText(empleadoData?.telefono)
 
         // Configurar el click listener para el botón "Editar"
         editarButton.setOnClickListener {

@@ -27,7 +27,8 @@ class TableCreationHelper(private val db: SQLiteDatabase) {
                 "idCargo INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "cargo TEXT," +
                 "sueldo INTEGER," +
-                "condicion TEXT" +
+                "condicion TEXT," +
+                "servicio TEXT" +
                 ")"
         db.execSQL(query)
     }

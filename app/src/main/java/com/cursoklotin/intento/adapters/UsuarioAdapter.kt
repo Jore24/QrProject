@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cursoklotin.intento.R
@@ -41,6 +41,14 @@ class UsuarioAdapter(private val listaUsuarios: List<List<Any>>) :
         holder.btnEditar.setOnClickListener {
             listener?.onEditar(usuario)
         }
+
+        // Eliminar
+        holder.btnEliminar.setOnClickListener {
+            listener?.onEliminar(usuario)
+        }
+
+
+
     }
 
 
@@ -56,6 +64,7 @@ class UsuarioAdapter(private val listaUsuarios: List<List<Any>>) :
     interface UsuarioAdapterListener {
         fun onVerDetallesBoleta(usuario: List<Any>)
         fun onEditar(usuario: List<Any>)
+        fun onEliminar(usuario: List<Any>)
     }
 
     class UsuarioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -64,5 +73,6 @@ class UsuarioAdapter(private val listaUsuarios: List<List<Any>>) :
         val textViewRol: TextView = itemView.findViewById(R.id.textViewRol)
         val btnBoleta: Button = itemView.findViewById(R.id.btnBoleta)
         val btnEditar: Button = itemView.findViewById(R.id.btnEditar)
+        val btnEliminar: ImageButton = itemView.findViewById(R.id.btnEliminar)
     }
 }

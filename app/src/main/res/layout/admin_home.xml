@@ -28,7 +28,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/btn_Atras"
+                    android:id="@+id/btnAtras"
                     style="@android:style/Widget.DeviceDefault.ImageButton"
                     android:layout_width="70dp"
                     android:layout_height="70dp"

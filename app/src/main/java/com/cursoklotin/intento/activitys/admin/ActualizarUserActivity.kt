@@ -12,12 +12,11 @@ import android.widget.Toast
 
 class ActualizarUserActivity : AppCompatActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_actualizar_user)
 
 }
+
 }
 

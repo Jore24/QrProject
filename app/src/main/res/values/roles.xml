@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="roles_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <!-- Agrega más elementos de rol si es necesario -->
+    </string-array>
+
+
+</resources>

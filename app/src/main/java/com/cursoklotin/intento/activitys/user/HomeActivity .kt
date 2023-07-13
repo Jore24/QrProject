@@ -13,7 +13,7 @@ import com.cursoklotin.intento.activitys.user.*
 
 class HomeActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var userManager: UserManager
-    private lateinit var cerrarSesionButton: Button
+    //private lateinit var cerrarSesionButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,21 +25,21 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         // Configurar los listeners de clic para los botones
-        cerrarSesionButton = findViewById(R.id.cerrarSesionButton)
+        //cerrarSesionButton = findViewById(R.id.cerrarSesionButton)
         findViewById<View>(R.id.buttonPerfil).setOnClickListener(this)
         findViewById<View>(R.id.buttonMarcarAsistencia).setOnClickListener(this)
         findViewById<View>(R.id.buttonHorario).setOnClickListener(this)
         findViewById<View>(R.id.buttonRegistroAsistencias).setOnClickListener(this)
         findViewById<View>(R.id.buttonBoleta).setOnClickListener(this)
 
-        cerrarSesionButton.setOnClickListener {
-            // Reiniciar el estado global y cerrar la sesión
-            userManager.resetEmpleadoData()
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finishAffinity()
-        }
+//        cerrarSesionButton.setOnClickListener {
+//            // Reiniciar el estado global y cerrar la sesión
+//            userManager.resetEmpleadoData()
+//            val intent = Intent(this, LoginActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(intent)
+//            finishAffinity()
+//        }
     }
 
     override fun onResume() {

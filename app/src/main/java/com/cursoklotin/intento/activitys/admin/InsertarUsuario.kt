@@ -39,7 +39,7 @@ class InsertarUsuario : AppCompatActivity() {
     private lateinit var txtSexo: EditText
     private lateinit var txtServicio: EditText
     private lateinit var txtJefe: EditText
-    private lateinit var txtDistrito: EditText
+    private lateinit var txtDistritos: Spinner
     private lateinit var txtDireccion: EditText
 
     //private lateinit var txtEstadoCuenta: EditText
@@ -52,6 +52,9 @@ class InsertarUsuario : AppCompatActivity() {
     private lateinit var txtUrl: ImageButton
     private lateinit var btnGuardar: Button
     //private val calendar = Calendar.getInstance()
+    //los distritos de lima
+    private val distritos = arrayOf("Ancón", "Ate", "Barranco", "Breña", "Carabayllo", "Chaclacayo", "Chorrillos", "Cieneguilla", "Comas", "El Agustino", "Independencia", "Jesús María", "La Molina", "La Victoria", "Lince", "Los Olivos", "Lurigancho", "Lurín", "Magdalena del Mar", "Miraflores", "Pachacamac", "Pucusana", "Pueblo Libre", "Puente Piedra", "Punta Hermosa", "Punta Negra", "Rímac", "San Bartolo", "San Borja", "San Isidro", "San Juan de Lurigancho", "San Juan de Miraflores", "San Luis", "San Martín de Porres", "San Miguel", "Santa Anita", "Santa María del Mar", "Santa Rosa", "Santiago de Surco", "Surquillo", "Villa El Salvador", "Villa María del Triunfo")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +74,7 @@ class InsertarUsuario : AppCompatActivity() {
         txtSexo = findViewById(R.id.txtSexo)
         txtServicio = findViewById(R.id.txtServicio)
         txtJefe = findViewById(R.id.txtJefe)
-        txtDistrito = findViewById(R.id.txtDistrito)
+        txtDistritos = findViewById(R.id.txtDistritos)
         txtDireccion = findViewById(R.id.txtDireccion)
         //txtEstadoCuenta = findViewById(R.id.txtEstadoCuenta)
         txtFechaInicio = findViewById(R.id.txtFechaInicio)
@@ -82,6 +85,22 @@ class InsertarUsuario : AppCompatActivity() {
         txtSalida = findViewById(R.id.txtSalida)
         txtUrl = findViewById(R.id.txtUrl)
         btnGuardar = findViewById(R.id.btnGuardar)
+
+        val adapterDistritos = ArrayAdapter(this, android.R.layout.simple_spinner_item, distritos)
+        adapterDistritos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        txtDistritos.adapter = adapterDistritos
+
+        txtDistritos.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedDistrito = parent.getItemAtPosition(position).toString()
+                // Realiza las acciones necesarias con el distrito seleccionado
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Acciones cuando no se selecciona ningún elemento del Spinner
+            }
+        }
+
 
         disableEditTextInteraction(txtFechaFin)
         disableEditTextInteraction(txtEntrada)
@@ -177,7 +196,7 @@ class InsertarUsuario : AppCompatActivity() {
             val sexo = txtSexo.text.toString()
             val servicio = txtServicio.text.toString()
             val jefe = txtJefe.text.toString()
-            val distrito = txtDistrito.text.toString()
+            val distrito = txtDistritos.selectedItem.toString()
             val direccion = txtDireccion.text.toString()
             //val estadoCuenta = txtEstadoCuenta.text.toString()
             val fechaInicio = txtFechaInicio.text.toString()
@@ -239,8 +258,8 @@ class InsertarUsuario : AppCompatActivity() {
                 condicion = condicion,
                 servicio = servicio
             )
-
-            if (validarTelefono(telefono) && (validarCorreo(correo)) && (validarDni(dni)) ) {
+            println(distrito)
+            if (validarTelefono(telefono) && (validarCorreo(correo)) && (validarDni(dni)) && (validarCampoTexto(direccion) ) ) {
                 val adminQueryHelper = AdminQueryHelper(this)
 
                 val cargoId = adminQueryHelper.insertarCargo(cargoData)
@@ -261,7 +280,7 @@ class InsertarUsuario : AppCompatActivity() {
                 }
             }
             else {
-            // El teléfono no es válido, realiza la acción correspondiente
+                Toast.makeText(this, "Ingrese datos válidos", Toast.LENGTH_SHORT).show()
         }
 
 
@@ -269,6 +288,10 @@ class InsertarUsuario : AppCompatActivity() {
             //println("Salida: ${horarioData.salida.get(Calendar.HOUR_OF_DAY)}:${horarioData.salida.get(Calendar.MINUTE)}")
 
         }
+    }
+    private fun validarCampoTexto(campo: String): Boolean {
+        val pattern = "^[a-zA-Z]+$"
+        return campo.matches(Regex(pattern))
     }
 
     private fun mostrarDatePicker(editText: EditText) {

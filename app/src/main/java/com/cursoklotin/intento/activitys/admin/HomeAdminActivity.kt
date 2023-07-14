@@ -3,6 +3,7 @@ import android.content.Intent
 import com.cursoklotin.intento.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -89,15 +90,15 @@ class HomeAdminActivity : AppCompatActivity(), UsuarioAdapter.UsuarioAdapterList
 
     //funcion para eliminar
     override fun onEliminar(usuario: List<Any>) {
-        // Obtener el ID del usuario y del empleado
         val idUsuario = usuario[1] as Int
         val idEmpleado = usuario[0] as Int
-
-        val mensaje = "Ver detalles de la boleta del usuario con ID: $idUsuario y ID de empleado: $idEmpleado"
+        adminQueryHelper.eliminarUsuarioPorId(idUsuario)
+        val mensaje = "Eliminar usuario con ID: $idUsuario y ID de empleado: $idEmpleado"
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
+
+        recreate() // Recargar la página
     }
 
-    //función para que vea el admin logueado vea los detalles de su perfil
 
 
 }

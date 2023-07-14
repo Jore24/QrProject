@@ -121,40 +121,16 @@ class AdminQueryHelper(private val context: Context) {
         }
 
         cursor?.close()
-        db.close()
+        //db.close()
 
         return usuarios
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     fun eliminarUsuarioPorId(id: Int): Int {
-        return db.delete("User", "id = ?", arrayOf(id.toString()))
+        return db.delete("Usuario", "idUser = ?", arrayOf(id.toString()))
     }
+
 
     fun actualizarUsuarioPorId(userData: UserData): Boolean {
         val contentValues = userData.toContentValues()

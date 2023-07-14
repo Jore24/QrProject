@@ -27,7 +27,7 @@ tools:context=".activitys.user.FinalizarAsistencia">
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/btn_Atras"
+            android:id="@+id/btnAtras"
             style="@android:style/Widget.DeviceDefault.ImageButton"
             android:layout_width="70dp"
             android:layout_height="70dp"
@@ -78,7 +78,7 @@ tools:context=".activitys.user.FinalizarAsistencia">
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/txt_Fecha"
+        android:id="@+id/txtFecha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
@@ -116,11 +116,11 @@ tools:context=".activitys.user.FinalizarAsistencia">
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/txt_Horario"
+        android:id="@+id/txtHorario1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_black"
-        android:text="90:00 am - 12:55 pm"
+        android:text=""
         android:textAlignment="center"
         android:textColor="#A5FBDD"
         android:textSize="30sp"
@@ -172,11 +172,11 @@ tools:context=".activitys.user.FinalizarAsistencia">
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_NameUser"
+                android:id="@+id/txtNombres"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_black"
-                android:text="Jorge Oré Palomino"
+                android:text=""
                 android:textColor="#000000"
                 android:textSize="25sp" />
 
@@ -219,7 +219,7 @@ tools:context=".activitys.user.FinalizarAsistencia">
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/txt_HoraInicio"
+            android:id="@+id/txtHoraInicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -245,7 +245,7 @@ tools:context=".activitys.user.FinalizarAsistencia">
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/txt_HoraFin"
+            android:id="@+id/txtHoraFin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -271,7 +271,7 @@ tools:context=".activitys.user.FinalizarAsistencia">
     card_view:layout_constraintStart_toStartOf="parent">
 
     <Button
-        android:id="@+id/btn_finalizarJornada"
+        android:id="@+id/btnFinalizarJornada"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -365,7 +365,7 @@ tools:context=".activitys.user.FinalizarAsistencia">
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_cancelar"
+                android:id="@+id/btnCancelar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="10dp"
@@ -383,7 +383,7 @@ tools:context=".activitys.user.FinalizarAsistencia">
                 card_view:strokeWidth="1dp" />
 
             <Button
-                android:id="@+id/btn_Aceptar"
+                android:id="@+id/btnAceptar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="10dp"

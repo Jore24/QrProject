@@ -78,11 +78,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txt_Fecha"
+                android:id="@+id/txtFecha1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="15 de Mayo del 2023"
+                android:text=" "
                 android:textAlignment="center"
                 android:textColor="#9F9F9F"
                 android:textSize="20sp"
@@ -116,11 +116,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txt_Horario"
+                android:id="@+id/txtHorario1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_black"
-                android:text="90:00 am - 12:55 pm"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="#A5FBDD"
                 android:textSize="30sp"
@@ -172,11 +172,11 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txt_NameUser"
+                        android:id="@+id/txtNombres1"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_black"
-                        android:text="Jorge Oré Palomino"
+                        android:text=""
                         android:textColor="#000000"
                         android:textSize="25sp" />
 
@@ -219,12 +219,12 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/txt_HoraInicio"
+                    android:id="@+id/txtHoraInicio1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:fontFamily="@font/roboto_black"
-                    android:text="0:00 am"
+                    android:text=""
                     android:textColor="#9F9F9F"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -246,12 +246,12 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/txt_HoraFin"
+                    android:id="@+id/txtHoraFin1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:fontFamily="@font/roboto_black"
-                    android:text="0:00 pm"
+                    android:text=""
                     android:textColor="#9F9F9F"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -271,7 +271,7 @@
             card_view:layout_constraintStart_toStartOf="parent">
 
             <Button
-                android:id="@+id/btn_finalizarJornada"
+                android:id="@+id/btn_finalizarJornada1"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -290,7 +290,7 @@
 
         <!--MODAL ACEPTAR INICIAR JORNADA-->
         <LinearLayout
-            android:id="@+id/modal_jornada"
+            android:id="@+id/modal_jornada1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -355,7 +355,7 @@
                     android:layout_marginVertical="10dp"
                     android:orientation="horizontal">
                     <Button
-                        android:id="@+id/btn_cancelarModal"
+                        android:id="@+id/btn_cancelarModal1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"

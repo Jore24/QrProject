@@ -10,6 +10,7 @@ import com.cursoklotin.intento.adapters.HorarioAdapter
 import com.cursoklotin.intento.bd.services.EmployeQueryHelper
 import com.cursoklotin.intento.models.HorarioData
 import com.cursoklotin.intento.models.HorarioDataWithDias
+import java.text.SimpleDateFormat
 import java.util.*
 
 class HorarioActivity : AppCompatActivity() {
@@ -20,7 +21,16 @@ class HorarioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_horario)
         employeQueryHelper = EmployeQueryHelper(this)
-        val listHorarioResult = employeQueryHelper.getHorariosByIdUser(3)
+        val listHorarioResult = employeQueryHelper.getHorariosByIdUser3(3)
+        val asistenciasEmpleadoId = employeQueryHelper.getAsistenciasByIdEmpleado(1)
+        val getNumeroAsistenciasByIdEmpleado1 = employeQueryHelper.getNumeroAsistenciasByIdEmpleado(1)
+        println("getNumeroAsistenciasByIdEmpleado1: $getNumeroAsistenciasByIdEmpleado1")
+        val Qrs = employeQueryHelper.getQr()
+        println("Qrs: $Qrs")
+        Log.i("HorarioActivity", "asistenciasEmpleadoId: $asistenciasEmpleadoId")
+
+
+
         println("listHorarioResult: $listHorarioResult")
 
         recyclerViewHorario = findViewById(R.id.recyclerViewHorario)
@@ -31,7 +41,7 @@ class HorarioActivity : AppCompatActivity() {
 
 
 
-}
+    }
 
 
 }

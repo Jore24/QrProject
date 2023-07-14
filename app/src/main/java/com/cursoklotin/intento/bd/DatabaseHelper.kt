@@ -10,7 +10,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     companion object {
         private const val DATABASE_NAME = "boletita2.db"
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 5
         @Volatile
         private var instance: DatabaseHelper? = null
 

@@ -10,6 +10,7 @@ class TableCreationHelper(private val db: SQLiteDatabase) {
         createScheduleTable()
         createAttendanceTable()
         createQRTable()
+        createTicketTable()
     }
 
     private fun createScheduleTable() {
@@ -96,5 +97,19 @@ class TableCreationHelper(private val db: SQLiteDatabase) {
                 ")"
         db.execSQL(query)
     }
+
+    private fun createTicketTable() {
+        val query = "CREATE TABLE IF NOT EXISTS Boleta (" +
+                "idBoleta INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "usuarioId INTEGER," +
+                "mes TEXT," +
+                "feriadoLaborado INTEGER," +
+                "descuentoTardanza Double," +
+                "netoPagar Double,"+
+                "FOREIGN KEY(usuarioId) REFERENCES Usuario(idUser)"+
+                ")"
+        db.execSQL(query)
+    }
+
 
 }

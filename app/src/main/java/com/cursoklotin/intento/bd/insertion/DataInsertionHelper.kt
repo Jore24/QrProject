@@ -6,10 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.cursoklotin.intento.AsistenciaData
 import com.cursoklotin.intento.QRData
-import com.cursoklotin.intento.models.CargoData
-import com.cursoklotin.intento.models.UserData
-import com.cursoklotin.intento.models.EmpleadoData
-import com.cursoklotin.intento.models.HorarioData
+import com.cursoklotin.intento.models.*
 import com.cursoklotin.intento.utils.DateTimeUtils.getCurrentDate
 import java.text.SimpleDateFormat
 import java.time.LocalTime
@@ -23,6 +20,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
         insertDefaultHorarioData()
         insertDefaultAsistenciaData()
         insertDefaultQRData()
+        insertBoletaData()
 
     }
     val horaEntrada = Calendar.getInstance()
@@ -65,6 +63,47 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
         }
     }
 
+    private fun insertBoletaData() {
+        val boletas = arrayOf(
+            BoletaData(
+                idBoleta = 1,
+                usuarioId = 2,
+                mes = "Enero",
+                feriadoLaborado = 0,
+                descuentoTardanza = 0.0,
+                netoPagar = 0.1
+            ),
+            BoletaData(
+                idBoleta = 2,
+                usuarioId = 2,
+                mes = "Febrero",
+                feriadoLaborado = 0,
+                descuentoTardanza = 0.0,
+                netoPagar = 0.0
+            )
+        )
+
+        for (boleta in boletas) {
+            val values = ContentValues().apply {
+                put("usuarioId", boleta.usuarioId)
+                put("mes", boleta.mes)
+                put("feriadoLaborado", boleta.feriadoLaborado)
+                put("descuentoTardanza", boleta.descuentoTardanza)
+                put("netoPagar", boleta.netoPagar)
+            }
+
+            db.insert("Boleta", null, values)
+
+            // Imprimir los datos ingresados
+            println("Datos ingresados:")
+            println("ID Usuario: ${boleta.usuarioId}")
+            println("Mes: ${boleta.mes}")
+            println("Feriado Laborado: ${boleta.feriadoLaborado}")
+            println("Descuento Tardanza: ${boleta.descuentoTardanza}")
+            println("Neto a Pagar: ${boleta.netoPagar}")
+            println("-------------------------")
+        }
+    }
 
 
     private fun insertDefaultHorarioData() {
@@ -94,7 +133,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
     private fun insertDataEmpleados() {
         val empleados = arrayOf(
             EmpleadoData(
-                idEmpleado = -1,
+                idEmpleado = 1,
                 idHorario = 1,
                 nombres = "Jorge Ore",
                 sexo = "Masculino",
@@ -109,7 +148,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                 ultimaActualizacion = "Ultima Actualización"
             ),
             EmpleadoData(
-                idEmpleado = -1,
+                idEmpleado = 2,
                 idHorario = 2,
                 nombres = "Clarita Maria",
                 sexo = "Femenino",
@@ -145,7 +184,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
 
             val usuarios = arrayOf(
                 UserData(
-                    idUser = -1,
+                    idUser = 1,
                     correo = "jore@",
                     contrasena = "123",
                     rol = 2,
@@ -158,7 +197,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                     url ="https://www.google.com"
                 ),
                 UserData(
-                    idUser = -1,
+                    idUser = 2,
                     correo = "jane@",
                     contrasena = "123",
                     rol = 1,

@@ -19,11 +19,14 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
+    private lateinit var employeQueryHelper: EmployeQueryHelper
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
         userManager = UserManager.getInstance(applicationContext)
+        employeQueryHelper = EmployeQueryHelper(this)
 
         // Inicializar vistas
         emailEditText = findViewById(R.id.editTextEmail)
@@ -41,7 +44,6 @@ class LoginActivity : AppCompatActivity() {
             val authQueryHelper = AuthQueryHelper(db)
             val (empleadoId, rol) = authQueryHelper.login(email, password)
 
-            val employeQueryHelper = EmployeQueryHelper(db)
             val empleadoData = employeQueryHelper.getEmployeById(empleadoId)
 
             if (empleadoId != -1) {

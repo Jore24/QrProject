@@ -4,6 +4,8 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -84,6 +86,10 @@ class InsertarUsuario : AppCompatActivity() {
         disableEditTextInteraction(txtFechaFin)
         disableEditTextInteraction(txtEntrada)
         disableEditTextInteraction(txtSalida)
+        disableEditTextInteraction(txtFechaNacimiento)
+        disableEditTextInteraction(txtFechaInicio)
+        disableEditTextInteraction(txtContrasena)
+
 
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -109,10 +115,6 @@ class InsertarUsuario : AppCompatActivity() {
             }
         }
 
-        txtFechaNacimiento.isFocusable = false
-        txtFechaNacimiento.isFocusableInTouchMode = false
-        txtFechaNacimiento.setOnClickListener(null)
-
         txtFechaNacimiento.setOnClickListener {
             mostrarDatePicker(txtFechaNacimiento)
         }
@@ -131,6 +133,34 @@ class InsertarUsuario : AppCompatActivity() {
         txtSalida.setOnClickListener {
             TimePickerUtils.showTimePickerDialog(this, txtSalida)
         }
+
+        txtDni.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // No es necesario realizar ninguna acción antes de cambiar el texto
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // No es necesario realizar ninguna acción durante el cambio de texto
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Obtener el valor del campo de DNI
+                val dni = s.toString()
+
+                // Verificar si el DNI tiene la longitud esperada
+                if (dni.length == 8) {
+                    // Generar la contraseña basada en el DNI
+                    //val contraseña = dni.substring(dni.length - 4)
+
+                    // Establecer el valor de la contraseña en el campo correspondiente
+                    txtContrasena.setText(dni)
+                } else {
+                    // Si el DNI no tiene la longitud esperada, se puede establecer un valor predeterminado para la contraseña
+                    txtContrasena.setText("")
+                }
+            }
+        })
+
 
         btnGuardar.setOnClickListener {
             val nombres = txtNombres.text.toString()

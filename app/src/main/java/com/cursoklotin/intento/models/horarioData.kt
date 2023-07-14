@@ -8,3 +8,6 @@ data class HorarioData(
     var entrada: Calendar,
     var salida: Calendar,
 )
+data class HorarioDataWithDias(val horarioData: HorarioData, val diasSemana: List<String>)
+
+

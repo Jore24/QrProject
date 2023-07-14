@@ -9,7 +9,7 @@ import com.cursoklotin.intento.bd.tables.TableCreationHelper
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_NAME = "nueva.db"
+        private const val DATABASE_NAME = "boletita.db"
         private const val DATABASE_VERSION = 1
         @Volatile
         private var instance: DatabaseHelper? = null
@@ -38,6 +38,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.execSQL("DROP TABLE IF EXISTS Horario")
         db.execSQL("DROP TABLE IF EXISTS Asistencia")
         db.execSQL("DROP TABLE IF EXISTS QR")
+        db.execSQL("DROP TABLE IF EXISTS Boleta")
         onCreate(db)
     }
 }

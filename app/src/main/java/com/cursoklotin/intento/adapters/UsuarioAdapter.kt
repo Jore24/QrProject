@@ -48,10 +48,7 @@ class UsuarioAdapter(private val listaUsuarios: List<List<Any>>) :
         }
 
 
-
     }
-
-
 
     override fun getItemCount(): Int {
         return listaUsuarios.size

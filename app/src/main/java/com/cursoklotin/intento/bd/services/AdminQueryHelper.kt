@@ -98,34 +98,6 @@ class AdminQueryHelper(private val context: Context) {
         return db.insert("Empleado", null, empleadoData.toContentValues())
     }
 
-    fun obtenerUsuarios(): List<UserData> {
-        val usuarios: MutableList<UserData> = mutableListOf()
-
-        val cursor: Cursor? = db.query("User", null, null, null, null, null, null)
-
-        cursor?.use {
-            while (cursor.moveToNext()) {
-                val userData = UserData(
-                    idUser = cursor.getInt(cursor.getColumnIndex("id")),
-                    correo = cursor.getString(cursor.getColumnIndex("correo")),
-                    contrasena = cursor.getString(cursor.getColumnIndex("contrasena")),
-                    rol = cursor.getInt(cursor.getColumnIndex("rol")),
-                    fechaInicio = cursor.getString(cursor.getColumnIndex("fechaInicio")),
-                    fechaFin = cursor.getString(cursor.getColumnIndex("fechaFin")),
-                    jefe = cursor.getString(cursor.getColumnIndex("jefe")),
-                    estadoCuenta = cursor.getString(cursor.getColumnIndex("estadoCuenta")),
-                    empleadoId = cursor.getInt(cursor.getColumnIndex("empleadoId")),
-                    cargoId = cursor.getInt(cursor.getColumnIndex("cargoId")),
-                    url = cursor.getString(cursor.getColumnIndex("url"))
-                )
-
-                usuarios.add(userData)
-            }
-        }
-
-        return usuarios
-    }
-
     fun obtenerUsuariosHomeAdmin(): List<List<Any>> {
         val usuarios: MutableList<List<Any>> = mutableListOf()
 

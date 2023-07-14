@@ -62,11 +62,16 @@ class MarcarAsistenciaActivity : AppCompatActivity() {
 
         //el txt Fecha tendrá la fecha actual en formato calendar y se mostrará en el txtFecha
         val currentDate = DateTimeUtils.getCurrentDate()
+        println("currentDate calendar?: $currentDate")
 
         val formattedFecha = SimpleDateFormat("dd 'de' MMMM 'del' yyyy", Locale.getDefault()).format(currentDate.time)
         txtFecha.text = formattedFecha
         txtHoraInicio.text = "00:00"
         txtHoraFin.text = "00:00"
+        val fecha = txtFecha.text.toString()
+        println("fecha: $fecha")
+        println("formattedFecha: ${formattedFecha}")
+
 
 
         employeQueryHelper = EmployeQueryHelper(this)
@@ -104,7 +109,12 @@ class MarcarAsistenciaActivity : AppCompatActivity() {
                     val currentDate = DateTimeUtils.getCurrentDate()
                     val formattedHoraInicio = SimpleDateFormat("h:mm a", Locale.getDefault()).format(currentDate.time)
                     val empleadoId = userManager.empleadoId
-                    //val marcarHoraEntradaAsistencia = employeQueryHelper.marcarHoraEntradaAsistencia(empleadoId!!, 1, fecha, horaEntrada, horaSalida, 1)
+                    val horaSalida = Calendar.getInstance()
+                    horaSalida.set(Calendar.HOUR_OF_DAY, 0) // Hora de salida a las 6:00 PM
+                    horaSalida.set(Calendar.MINUTE, 0)
+
+                    val marcarHoraEntradaAsistencia = employeQueryHelper.marcarHoraEntradaAsistencia(empleadoId!!, 1, currentDate, currentDate, horaSalida, 1 )
+                    println("marcarHoraEntradaAsistencia: $marcarHoraEntradaAsistencia")
                     Toast.makeText(this, "Código QR válido", Toast.LENGTH_LONG).show()
                     val intent = Intent(this, FinalizarJornada::class.java)
                     intent.putExtra("horaInicio", formattedHoraInicio)

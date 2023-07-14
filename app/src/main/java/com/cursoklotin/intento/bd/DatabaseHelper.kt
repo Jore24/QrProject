@@ -9,8 +9,8 @@ import com.cursoklotin.intento.bd.tables.TableCreationHelper
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_NAME = "boletita22222.db"
-        private const val DATABASE_VERSION = 12
+        private const val DATABASE_NAME = "boletita22222a.db"
+        private const val DATABASE_VERSION = 15
         @Volatile
         private var instance: DatabaseHelper? = null
 

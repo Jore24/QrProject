@@ -212,6 +212,9 @@ class InsertarUsuario : AppCompatActivity() {
                 entrada = entradaCalendar,
                 salida = salidaCalendar
             )
+            println(entradaCalendar)
+            println(salidaCalendar)
+
 
             val empleadoData = EmpleadoData(
                 idEmpleado = 0, //aquí creo un empleado nuevo

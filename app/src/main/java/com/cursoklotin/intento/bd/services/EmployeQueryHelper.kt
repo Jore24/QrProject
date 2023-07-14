@@ -102,7 +102,7 @@ class EmployeQueryHelper(private val context: Context) {
                 val entradaStr = cursor.getString(cursor.getColumnIndex("entrada"))
                 val salidaStr = cursor.getString(cursor.getColumnIndex("salida"))
 
-                val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
                 val entradaCalendar = Calendar.getInstance()
                 val salidaCalendar = Calendar.getInstance()
                 entradaCalendar.time = sdf.parse(entradaStr)
@@ -110,6 +110,7 @@ class EmployeQueryHelper(private val context: Context) {
 
                 val horarioData = HorarioData(idHorario, diaSemana, entradaCalendar, salidaCalendar)
                 horarios.add(horarioData)
+                println("horarioData"+horarioData)
             }
         }
 

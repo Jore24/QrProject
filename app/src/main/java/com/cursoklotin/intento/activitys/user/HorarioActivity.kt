@@ -20,7 +20,7 @@ class HorarioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_horario)
         employeQueryHelper = EmployeQueryHelper(this)
-        val listHorarioResult = employeQueryHelper.getHorariosByIdUser(2)
+        val listHorarioResult = employeQueryHelper.getHorariosByIdUser(3)
         println("listHorarioResult: $listHorarioResult")
 
         recyclerViewHorario = findViewById(R.id.recyclerViewHorario)

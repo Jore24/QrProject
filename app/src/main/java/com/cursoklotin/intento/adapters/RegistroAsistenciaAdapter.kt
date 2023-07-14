@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cursoklotin.intento.AsistenciaData
 import com.cursoklotin.intento.R
+import com.cursoklotin.intento.utils.DateTimeUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,13 +42,18 @@ class RegistroAsistenciaAdapter(private val asistencias: List<AsistenciaData>, p
         fun bind(asistencia: AsistenciaData) {
             // Actualizar la vista con los datos de la asistencia
             val fecha = asistencia.fecha
+
             val formattedFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(fecha.time)
 
             val horaEntrada = asistencia.horaEntrada
-            val formattedHoraEntrada = SimpleDateFormat("HH:mm", Locale.getDefault()).format(horaEntrada.time)
+            println("Hora entrada: $horaEntrada")
+
+            val formattedHoraEntrada = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(horaEntrada.time)
 
             val horaSalida = asistencia.horaSalida
-            val formattedHoraSalida = SimpleDateFormat("HH:mm", Locale.getDefault()).format(horaSalida.time)
+            println("Hora entrada: $horaSalida")
+
+            val formattedHoraSalida = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(horaSalida.time)
 
             // Calcular la diferencia de tiempo entre la hora de entrada y la hora de salida
             val diffInMillis = horaSalida.timeInMillis - horaEntrada.timeInMillis
@@ -57,7 +63,6 @@ class RegistroAsistenciaAdapter(private val asistencias: List<AsistenciaData>, p
             txtFecha.text = formattedFecha
             txtHora.text = "Entrada: $formattedHoraEntrada - Salida: $formattedHoraSalida\nHoras trabajadas: $horasTrabajadas horas $minutosTrabajados minutos"
             diasAsistidos.visibility = View.GONE
-
 
             // Aquí puedes configurar los demás elementos de la vista según los datos de la asistencia
         }

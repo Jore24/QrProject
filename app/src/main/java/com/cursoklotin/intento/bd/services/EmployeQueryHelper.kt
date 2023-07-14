@@ -1,5 +1,6 @@
 package com.cursoklotin.intento.bd.services
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.cursoklotin.intento.AsistenciaData
@@ -152,14 +153,64 @@ class EmployeQueryHelper(private val context: Context) {
                 val horarioData = HorarioData(idHorario, diaSemana, entradaCalendar, salidaCalendar)
                 horarios.add(horarioData)
 
-                //println("entradaCalendar: $entradaCalendar")
-                //println("salidaCalendar: $salidaCalendar")
+                println("entradaCalendar: $entradaCalendar")
+                println("salidaCalendar: $salidaCalendar")
             }
         }
 
         return horarios
     }
 
+//    fun getAsistenciasByIdEmpleado(empleadoId: Int): List<AsistenciaData> {
+//        val asistencias: MutableList<AsistenciaData> = mutableListOf()
+//
+//        val query = "SELECT idAsistencia, idEmpleado, idQR, fecha, horaEntrada, horaSalida, estadoAsistencia " +
+//                "FROM Asistencia " +
+//                "WHERE idEmpleado = ?"
+//
+//        val cursor = db.rawQuery(query, arrayOf(empleadoId.toString()))
+//
+//        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+//        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+//
+//        cursor?.use {
+//            while (cursor.moveToNext()) {
+//                val idAsistencia = cursor.getInt(cursor.getColumnIndex("idAsistencia"))
+//                val idEmpleado = cursor.getInt(cursor.getColumnIndex("idEmpleado"))
+//                val idQR = cursor.getInt(cursor.getColumnIndex("idQR"))
+//                val fechaStr = cursor.getString(cursor.getColumnIndex("fecha"))
+//                val horaEntradaStr = cursor.getString(cursor.getColumnIndex("horaEntrada"))
+//                val horaSalidaStr = cursor.getString(cursor.getColumnIndex("horaSalida"))
+//                val estadoAsistencia = cursor.getInt(cursor.getColumnIndex("estadoAsistencia"))
+//
+//                val fecha = Calendar.getInstance()
+//                fecha.time = dateFormat.parse(fechaStr)
+//
+//                val horaEntrada = Calendar.getInstance()
+//                horaEntrada.time = timeFormat.parse(horaEntradaStr)
+//
+//                val horaSalida = Calendar.getInstance()
+//                horaSalida.time = timeFormat.parse(horaSalidaStr)
+//
+//                val asistenciaData = AsistenciaData(idAsistencia, idEmpleado, idQR, fecha, horaEntrada, horaSalida, estadoAsistencia)
+//                asistencias.add(asistenciaData)
+//
+//                // Imprimir los datos de la asistencia
+//                println("ID Asistencia: ${asistenciaData.idAsistencia}")
+//                println("ID Empleado: ${asistenciaData.idEmpleado}")
+//                println("ID QR: ${asistenciaData.idQR}")
+//                println("Fecha: ${asistenciaData.fecha.time}")
+//                println("Hora de entrada: ${asistenciaData.horaEntrada.time}")
+//                println("Hora de salida: ${asistenciaData.horaSalida.time}")
+//                println("Estado de asistencia: ${asistenciaData.estadoAsistencia}")
+//                println("-----------------------")
+//            }
+//        }
+//
+//        return asistencias
+//    }
+
+    @SuppressLint("Range")
     fun getAsistenciasByIdEmpleado(empleadoId: Int): List<AsistenciaData> {
         val asistencias: MutableList<AsistenciaData> = mutableListOf()
 
@@ -169,29 +220,34 @@ class EmployeQueryHelper(private val context: Context) {
 
         val cursor = db.rawQuery(query, arrayOf(empleadoId.toString()))
 
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-
         cursor?.use {
             while (cursor.moveToNext()) {
                 val idAsistencia = cursor.getInt(cursor.getColumnIndex("idAsistencia"))
                 val idEmpleado = cursor.getInt(cursor.getColumnIndex("idEmpleado"))
                 val idQR = cursor.getInt(cursor.getColumnIndex("idQR"))
-                val fechaStr = cursor.getString(cursor.getColumnIndex("fecha"))
-                val horaEntradaStr = cursor.getString(cursor.getColumnIndex("horaEntrada"))
-                val horaSalidaStr = cursor.getString(cursor.getColumnIndex("horaSalida"))
+                val fechaMillis = cursor.getLong(cursor.getColumnIndex("fecha"))
+                val horaEntradaMillis = cursor.getLong(cursor.getColumnIndex("horaEntrada"))
+                val horaSalidaMillis = cursor.getLong(cursor.getColumnIndex("horaSalida"))
                 val estadoAsistencia = cursor.getInt(cursor.getColumnIndex("estadoAsistencia"))
 
-                val fecha = Calendar.getInstance()
-                fecha.time = dateFormat.parse(fechaStr)
+                val fechaCalendar = Calendar.getInstance()
+                fechaCalendar.timeInMillis = fechaMillis
 
-                val horaEntrada = Calendar.getInstance()
-                horaEntrada.time = timeFormat.parse(horaEntradaStr)
+                val horaEntradaCalendar = Calendar.getInstance()
+                horaEntradaCalendar.timeInMillis = horaEntradaMillis
 
-                val horaSalida = Calendar.getInstance()
-                horaSalida.time = timeFormat.parse(horaSalidaStr)
+                val horaSalidaCalendar = Calendar.getInstance()
+                horaSalidaCalendar.timeInMillis = horaSalidaMillis
 
-                val asistenciaData = AsistenciaData(idAsistencia, idEmpleado, idQR, fecha, horaEntrada, horaSalida, estadoAsistencia)
+                val asistenciaData = AsistenciaData(
+                    idAsistencia,
+                    idEmpleado,
+                    idQR,
+                    fechaCalendar,
+                    horaEntradaCalendar,
+                    horaSalidaCalendar,
+                    estadoAsistencia
+                )
                 asistencias.add(asistenciaData)
 
                 // Imprimir los datos de la asistencia
@@ -203,11 +259,25 @@ class EmployeQueryHelper(private val context: Context) {
                 println("Hora de salida: ${asistenciaData.horaSalida}")
                 println("Estado de asistencia: ${asistenciaData.estadoAsistencia}")
                 println("-----------------------")
+                val formatoHora = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+                val horaEntradaString = formatoHora.format(horaEntradaCalendar.time)
+
+                val horaSalidaString = formatoHora.format(horaSalidaCalendar.time)
+
+                println("Hora entrada desde el método?: $horaEntradaString")
+                println("Hora salida desde el m´petodoo: $horaSalidaString")
             }
         }
 
         return asistencias
     }
+
+
+
+
+
+
 
     fun getNumeroAsistenciasByIdEmpleado(empleadoId: Int): Int {
         val query = "SELECT COUNT(*) AS count FROM Asistencia WHERE idEmpleado = ?"
@@ -302,6 +372,8 @@ class EmployeQueryHelper(private val context: Context) {
 
         db.execSQL(query, values)
     }
+
+
 
 
 

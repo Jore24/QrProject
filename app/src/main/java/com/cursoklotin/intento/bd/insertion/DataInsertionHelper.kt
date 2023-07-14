@@ -216,7 +216,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                     fechaFin = "Fecha Fin",
                     jefe = "Jefe A",
                     estadoCuenta = "Activo-Inactivo",
-                    empleadoId = empleadoId.toInt(),
+                    empleadoId = 1,
                     cargoId = 1,
                     url ="https://www.google.com"
                 ),
@@ -229,7 +229,7 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
                     fechaFin = "Fecha Fin",
                     jefe = "Jefe A",
                     estadoCuenta = "Activo-Inactivo",
-                    empleadoId = empleadoId.toInt(),
+                    empleadoId = 2,
                     cargoId = 2,
                     url ="https://www.google.com"
                 )
@@ -292,38 +292,101 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
     }
 
 
+//    private fun insertDefaultAsistenciaData() {
+//        val currentDate = getCurrentDate()
+//        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+//        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+//
+//        val horaEntrada1 = Calendar.getInstance() //declarar fuera esta instancia para que no se repita
+//        horaEntrada1.set(Calendar.HOUR_OF_DAY, 12) // Establecer la hora de entrada a las 12:00
+//        horaEntrada1.set(Calendar.MINUTE, 0)
+//        horaEntrada1.set(Calendar.SECOND, 0)
+//
+//        val horaEntrada2 = Calendar.getInstance()
+//        horaEntrada2.set(Calendar.HOUR_OF_DAY, 13) // Establecer la hora de entrada a las 13:00
+//        horaEntrada2.set(Calendar.MINUTE, 0)
+//        horaEntrada2.set(Calendar.SECOND, 0)
+//
+//        val horaSalida1 = Calendar.getInstance()
+//        horaSalida1.set(Calendar.HOUR_OF_DAY, 16) // Establecer la hora de salida a las 16:00
+//        horaSalida1.set(Calendar.MINUTE, 0)
+//        horaSalida1.set(Calendar.SECOND, 0)
+//
+//        val horaSalida2 = Calendar.getInstance()
+//        horaSalida2.set(Calendar.HOUR_OF_DAY, 17) // Establecer la hora de salida a las 17:00
+//        horaSalida2.set(Calendar.MINUTE, 0)
+//        horaSalida2.set(Calendar.SECOND, 0)
+//
+//        val asistenciaDataList = listOf(
+//            AsistenciaData(0, 2, 1, currentDate, horaEntrada2, horaSalida2, 1),
+//            AsistenciaData(0, 2, 1, currentDate, horaEntrada1, horaSalida1, 1),
+//            AsistenciaData(0, 2, 1, currentDate, horaEntrada2, horaSalida2, 1),
+//            AsistenciaData(0, 2, 1, currentDate, horaEntrada2, horaSalida1, 1),
+//            AsistenciaData(0, 2, 1, currentDate, horaEntrada2, horaSalida2, 1),
+//            AsistenciaData(0, 2, 1, currentDate, horaEntrada1, horaSalida1, 1),
+//            AsistenciaData(0, 2, 2, currentDate, horaEntrada2, horaSalida2, 1)
+//        )
+//        println("Lista Asistencia asistenciaDataList: $asistenciaDataList")
+//
+//        for (asistenciaData in asistenciaDataList) {
+//            val query = "INSERT INTO Asistencia(idEmpleado, idQR, fecha, horaEntrada, horaSalida, estadoAsistencia) VALUES (?, ?, ?, ?, ?, ?)"
+//            val statement = db.compileStatement(query)
+//
+//            statement.bindLong(1, asistenciaData.idEmpleado.toLong())
+//            statement.bindLong(2, asistenciaData.idQR.toLong())
+//           // statement.bindString(3, dateFormat.format(asistenciaData.fecha.time))
+////            statement.bindString(4, timeFormat.format(asistenciaData.horaEntrada.time))
+////            statement.bindString(5, timeFormat.format(asistenciaData.horaSalida.time))
+//            statement.bindString(3, asistenciaData.fecha.toString())
+//            statement.bindString(4, asistenciaData.horaEntrada.toString())
+//            statement.bindString(5, asistenciaData.horaSalida.toString())
+//
+//
+//            statement.bindLong(6, asistenciaData.estadoAsistencia.toLong())
+//
+//            println("Lista Asistencia asistenciaData: AQUIIIIIIIIIIIIII $asistenciaData")
+//
+//
+//            statement.executeInsert()
+//
+//            // Imprimir las horas de entrada y salida formateadas
+//            println("Hora de entrada desde inserción : ${timeFormat.format(asistenciaData.horaEntrada.time)}")
+//            println("Hora de salida: ${timeFormat.format(asistenciaData.horaSalida.time)}")
+//            println("            println(asistenciaData)\n "+asistenciaData)
+//        }
+//    }
+
     private fun insertDefaultAsistenciaData() {
         val currentDate = getCurrentDate()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-        val horaEntrada1 = Calendar.getInstance() //declarar fuera esta instancia para que no se repita
-        horaEntrada1.set(Calendar.HOUR_OF_DAY, 12) // Establecer la hora de entrada a las 12:00
+        val horaEntrada1 = Calendar.getInstance()
+        horaEntrada1.set(Calendar.HOUR_OF_DAY, 12)
         horaEntrada1.set(Calendar.MINUTE, 0)
         horaEntrada1.set(Calendar.SECOND, 0)
 
         val horaEntrada2 = Calendar.getInstance()
-        horaEntrada2.set(Calendar.HOUR_OF_DAY, 13) // Establecer la hora de entrada a las 13:00
+        horaEntrada2.set(Calendar.HOUR_OF_DAY, 13)
         horaEntrada2.set(Calendar.MINUTE, 0)
         horaEntrada2.set(Calendar.SECOND, 0)
 
         val horaSalida1 = Calendar.getInstance()
-        horaSalida1.set(Calendar.HOUR_OF_DAY, 16) // Establecer la hora de salida a las 16:00
+        horaSalida1.set(Calendar.HOUR_OF_DAY, 16)
         horaSalida1.set(Calendar.MINUTE, 0)
         horaSalida1.set(Calendar.SECOND, 0)
 
         val horaSalida2 = Calendar.getInstance()
-        horaSalida2.set(Calendar.HOUR_OF_DAY, 17) // Establecer la hora de salida a las 17:00
+        horaSalida2.set(Calendar.HOUR_OF_DAY, 17)
         horaSalida2.set(Calendar.MINUTE, 0)
         horaSalida2.set(Calendar.SECOND, 0)
 
         val asistenciaDataList = listOf(
-            AsistenciaData(0, 1, 1, currentDate, horaEntrada1, horaSalida1, 1),
-            AsistenciaData(0, 1, 1, currentDate, horaEntrada1, horaSalida1, 1),
-            AsistenciaData(0, 1, 1, currentDate, horaEntrada1, horaSalida1, 1),
-            AsistenciaData(0, 1, 1, currentDate, horaEntrada1, horaSalida1, 1),
-            AsistenciaData(0, 1, 1, currentDate, horaEntrada1, horaSalida1, 1),
-            AsistenciaData(0, 1, 1, currentDate, horaEntrada1, horaSalida1, 1),
+            AsistenciaData(0, 2, 1, currentDate, horaEntrada2, horaSalida2, 1),
+            AsistenciaData(0, 2, 1, currentDate, horaEntrada1, horaSalida1, 1),
+            AsistenciaData(0, 2, 1, currentDate, horaEntrada2, horaSalida2, 1),
+            AsistenciaData(0, 2, 1, currentDate, horaEntrada2, horaSalida1, 1),
+            AsistenciaData(0, 2, 1, currentDate, horaEntrada2, horaSalida2, 1),
+            AsistenciaData(0, 2, 1, currentDate, horaEntrada1, horaSalida1, 1),
             AsistenciaData(0, 2, 2, currentDate, horaEntrada2, horaSalida2, 1)
         )
         println("Lista Asistencia asistenciaDataList: $asistenciaDataList")
@@ -335,18 +398,19 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
             statement.bindLong(1, asistenciaData.idEmpleado.toLong())
             statement.bindLong(2, asistenciaData.idQR.toLong())
             statement.bindString(3, dateFormat.format(asistenciaData.fecha.time))
-            statement.bindString(4, timeFormat.format(asistenciaData.horaEntrada.time))
-            statement.bindString(5, timeFormat.format(asistenciaData.horaSalida.time))
+            statement.bindLong(4, asistenciaData.horaEntrada.timeInMillis)
+            statement.bindLong(5, asistenciaData.horaSalida.timeInMillis)
             statement.bindLong(6, asistenciaData.estadoAsistencia.toLong())
 
-            println("Lista Asistencia asistenciaData: $asistenciaData")
-
+            println("Lista Asistencia asistenciaData: AQUIIIIIIIIIIIIII $asistenciaData")
 
             statement.executeInsert()
 
             // Imprimir las horas de entrada y salida formateadas
-            println("Hora de entrada: ${timeFormat.format(asistenciaData.horaEntrada.time)}")
-            println("Hora de salida: ${timeFormat.format(asistenciaData.horaSalida.time)}")
+            val formatoHora = SimpleDateFormat("HH:mm", Locale.getDefault())
+            println("Hora de entrada desde inserción : ${formatoHora.format(asistenciaData.horaEntrada.time)}")
+            println("Hora de salida: ${formatoHora.format(asistenciaData.horaSalida.time)}")
+            println("            println(asistenciaData)\n $asistenciaData")
         }
     }
 

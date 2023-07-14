@@ -36,9 +36,6 @@ class MarcarAsistenciaActivity : AppCompatActivity() {
     private lateinit var txtHoraFin: TextView
     private var idAsistencia: Int = 0
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = UserMarcarAsistenciaBinding.inflate(layoutInflater)
@@ -106,7 +103,8 @@ class MarcarAsistenciaActivity : AppCompatActivity() {
                 if (isQRCodeValid(qrCode)) {
                     val currentDate = DateTimeUtils.getCurrentDate()
                     val formattedHoraInicio = SimpleDateFormat("h:mm a", Locale.getDefault()).format(currentDate.time)
-                    //marcarHoraEntradaAsistencia = employeQueryHelper.marcarHoraEntradaAsistencia(idEmpleado, idQR, fecha, horaEntrada, horaSalida, estadoAsistencia)
+                    val empleadoId = userManager.empleadoId
+                    //val marcarHoraEntradaAsistencia = employeQueryHelper.marcarHoraEntradaAsistencia(empleadoId!!, 1, fecha, horaEntrada, horaSalida, 1)
                     Toast.makeText(this, "Código QR válido", Toast.LENGTH_LONG).show()
                     val intent = Intent(this, FinalizarJornada::class.java)
                     intent.putExtra("horaInicio", formattedHoraInicio)
@@ -126,7 +124,10 @@ class MarcarAsistenciaActivity : AppCompatActivity() {
     private fun isQRCodeValid(qrCode: String): Boolean {
         val employeQueryHelper = EmployeQueryHelper(this)
         val qrs = employeQueryHelper.getQr()
-
+        println(qrs[0])
+        println(qrs[1])
+        println(qrs[2])
+        Toast.makeText(this, "Código QR válido", Toast.LENGTH_LONG).show()
         for (qr in qrs) {
             if (qr.codigo == qrCode ) {
                 return true

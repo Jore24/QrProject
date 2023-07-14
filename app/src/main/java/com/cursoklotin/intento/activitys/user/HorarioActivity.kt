@@ -28,12 +28,12 @@ class HorarioActivity : AppCompatActivity() {
         println("empleadoId: $empleadoId")
         employeQueryHelper = EmployeQueryHelper(this)
         val listHorarioResult = employeQueryHelper.getHorariosByIdUser3(empleadoId!!)
-        val asistenciasEmpleadoId = employeQueryHelper.getAsistenciasByIdEmpleado(empleadoId)
-        val getNumeroAsistenciasByIdEmpleado1 = employeQueryHelper.getNumeroAsistenciasByIdEmpleado(empleadoId)
-        println("getNumeroAsistenciasByIdEmpleado1: $getNumeroAsistenciasByIdEmpleado1")
+        //val asistenciasEmpleadoId = employeQueryHelper.getAsistenciasByIdEmpleado(empleadoId)
+        //val getNumeroAsistenciasByIdEmpleado1 = employeQueryHelper.getNumeroAsistenciasByIdEmpleado(empleadoId)
+       // println("getNumeroAsistenciasByIdEmpleado1: $getNumeroAsistenciasByIdEmpleado1")
         val Qrs = employeQueryHelper.getQr()
         println("Qrs: $Qrs")
-        Log.i("HorarioActivity", "asistenciasEmpleadoId: $asistenciasEmpleadoId")
+       // Log.i("HorarioActivity", "asistenciasEmpleadoId: $asistenciasEmpleadoId")
 
 
 

@@ -37,11 +37,6 @@ class RegistroAsistenciasActivity : AppCompatActivity() {
         val adapter = RegistroAsistenciaAdapter(asistenciasEmpleado, numeroAsistenciasEmpleado)
         recyclerView.adapter = adapter
 
-
-
-
-
-
     }
 
 

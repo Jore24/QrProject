@@ -48,16 +48,6 @@ class HorarioAdapter(private val listaHorario: List<HorarioData>, private val li
         holder.txtDia.text = dia
     }
 
-
-
-
-
-    private fun formatTime(hour: Int, minute: Int): String {
-        val hourStr = if (hour < 10) "0$hour" else hour.toString()
-        val minuteStr = if (minute < 10) "0$minute" else minute.toString()
-        return "$hourStr:$minuteStr:00"
-    }
-
         override fun getItemCount(): Int {
             return listaDias.size
         }
